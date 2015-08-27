@@ -16,11 +16,15 @@ import android.widget.LinearLayout;
  */
 public class ScrollGalleryView extends LinearLayout {
     private Context context;
-    private HorizontalScrollView horizontalScrollView;
-    private LinearLayout thumbnailsContainer;
     private WindowManager windowManager;
-
     private int thumbnailSize; // width and height in pixels
+    private boolean isFirstBackground = false;
+
+    // Views
+    private LinearLayout thumbnailsContainer;
+    private HorizontalScrollView horizontalScrollView;
+    private ImageView backgroundImageView;
+    ////////
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -32,6 +36,7 @@ public class ScrollGalleryView extends LinearLayout {
         inflater.inflate(R.layout.scroll_gallery_view, this, true);
 
         horizontalScrollView = (HorizontalScrollView)findViewById(R.id.thumbnails_scroll_view);
+        backgroundImageView = (ImageView)findViewById(R.id.backgroundImage);
 
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
@@ -45,7 +50,7 @@ public class ScrollGalleryView extends LinearLayout {
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(thumbnailSize, thumbnailSize);
         thumbnail.setLayoutParams(layoutParams);
-        thumbnail.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         thumbnail.setPadding(10, 10, 10, 10); // add method for setting
         thumbnail.setImageDrawable(getResources().getDrawable(image));
@@ -57,6 +62,10 @@ public class ScrollGalleryView extends LinearLayout {
 
     public ScrollGalleryView addImage(int image) {
         addThumbnail(image);
+        if(!isFirstBackground) {
+            backgroundImageView.setImageDrawable(getResources().getDrawable(image));
+            isFirstBackground = true;
+        }
         return this;
     }
 
@@ -68,6 +77,8 @@ public class ScrollGalleryView extends LinearLayout {
     private OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
+            backgroundImageView.setImageDrawable(((ImageView) v).getDrawable());
+
             Display display = windowManager.getDefaultDisplay();
             int thumbnailCoords[] = new int [2];
             v.getLocationOnScreen(thumbnailCoords);
@@ -75,9 +86,7 @@ public class ScrollGalleryView extends LinearLayout {
             int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;
             int thumbnailDelta = display.getWidth() / 2 - thumbnailCenterX;
 
-            int coords[] = new int [2];
-            if(thumbnailCenterX > display.getWidth() / 2) horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
-            else horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
+            horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
         }
     };
 }
