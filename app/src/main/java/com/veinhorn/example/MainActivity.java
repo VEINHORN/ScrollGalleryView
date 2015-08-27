@@ -15,17 +15,12 @@ public class MainActivity extends Activity {
 
         scrollGalleryView = (ScrollGalleryView)findViewById(R.id.scroll_gallery_view);
         scrollGalleryView
-                .setThumbnailSize(200)
+                .setThumbnailSize(150)
                 .addImage(R.drawable.wallpaper1)
-                .addImage(R.drawable.wallpaper1);
-                /*
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1)
-                .addThumbnail(R.drawable.thumbnail1);*/
+                .addImage(R.drawable.wallpaper2)
+                .addImage(R.drawable.wallpaper3)
+                //.addImage(R.drawable.wallpaper4)
+                .addImage(R.drawable.wallpaper5);
         int a = 0;
     }
 }

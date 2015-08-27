@@ -18,9 +18,7 @@ public class ScrollGalleryView extends LinearLayout {
     private Context context;
     private HorizontalScrollView horizontalScrollView;
     private LinearLayout thumbnailsContainer;
-
-    private Integer thumbnailsCount;
-    private Integer curThumbnailPos;
+    private WindowManager windowManager;
 
     private int thumbnailSize; // width and height in pixels
 
@@ -35,29 +33,24 @@ public class ScrollGalleryView extends LinearLayout {
 
         horizontalScrollView = (HorizontalScrollView)findViewById(R.id.thumbnails_scroll_view);
 
-        // ===
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
+        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
         thumbnailsContainer = (LinearLayout)findViewById(R.id.thumbnails_container);
-        thumbnailsContainer.setPadding(display.getWidth() / 2 - 100, 0,
-                display.getWidth() / 2 - 100, 0);
-        // ===
-
-        curThumbnailPos = 0;
-        thumbnailsCount = 0;
+        thumbnailsContainer.setPadding(display.getWidth() / 2, 0,
+                display.getWidth() / 2, 0);
     }
 
     public ScrollGalleryView addThumbnail(int image) {
         ImageView thumbnail = new ImageView(context);
-        thumbnail.setTag(thumbnailsCount++);
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(thumbnailSize, thumbnailSize);
         thumbnail.setLayoutParams(layoutParams);
-        thumbnail.setScaleType(ImageView.ScaleType.MATRIX);
+        thumbnail.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-        thumbnail.setImageDrawable(getResources().getDrawable(image));
         thumbnail.setPadding(10, 10, 10, 10); // add method for setting
-        //thumbnail.setOnClickListener(thumbnailOnClickListener);
+        thumbnail.setImageDrawable(getResources().getDrawable(image));
+
+        thumbnail.setOnClickListener(thumbnailOnClickListener);
         thumbnailsContainer.addView(thumbnail);
         return this;
     }
@@ -71,14 +64,20 @@ public class ScrollGalleryView extends LinearLayout {
         this.thumbnailSize = thumbnailSize;
         return this;
     }
-    /*
+
     private OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            int clickedThumbnailPos = (int)v.getTag();
-            if(clickedThumbnailPos > curThumbnailPos) horizontalScrollView.smoothScrollBy(2 * thumbnailSize, 0);
-            else if(clickedThumbnailPos < curThumbnailPos) horizontalScrollView.smoothScrollBy(-2 * thumbnailSize, 0);
-            curThumbnailPos = clickedThumbnailPos;
+            Display display = windowManager.getDefaultDisplay();
+            int thumbnailCoords[] = new int [2];
+            v.getLocationOnScreen(thumbnailCoords);
+
+            int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;
+            int thumbnailDelta = display.getWidth() / 2 - thumbnailCenterX;
+
+            int coords[] = new int [2];
+            if(thumbnailCenterX > display.getWidth() / 2) horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
+            else horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
         }
-    };*/
+    };
 }
