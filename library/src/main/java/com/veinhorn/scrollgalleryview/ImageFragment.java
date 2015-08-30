@@ -13,13 +13,9 @@ import android.widget.ImageView;
 public class ImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = (ViewGroup)inflater.inflate(R.layout.image_fragment, container, false);
-
-        int image = getArguments().getInt("image");
-
+        View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         ImageView backgroundImage = (ImageView)rootView.findViewById(R.id.backgroundImage);
-        backgroundImage.setImageDrawable(getResources().getDrawable(image));
-
+        backgroundImage.setImageDrawable(getResources().getDrawable(getArguments().getInt("image")));
         return rootView;
     }
 }

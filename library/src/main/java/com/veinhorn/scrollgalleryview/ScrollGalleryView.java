@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -25,12 +24,10 @@ public class ScrollGalleryView extends LinearLayout {
     private Context context;
     private WindowManager windowManager;
     private int thumbnailSize; // width and height in pixels
-    private boolean isFirstBackground = false;
 
     // Views
     private LinearLayout thumbnailsContainer;
     private HorizontalScrollView horizontalScrollView;
-    //private ImageView backgroundImageView;
     private ViewPager viewPager;
     ////////
     private PagerAdapter pagerAdapter;
@@ -40,7 +37,6 @@ public class ScrollGalleryView extends LinearLayout {
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-
         images = new ArrayList<>();
 
         setOrientation(VERTICAL);
@@ -51,7 +47,6 @@ public class ScrollGalleryView extends LinearLayout {
         inflater.inflate(R.layout.scroll_gallery_view, this, true);
 
         horizontalScrollView = (HorizontalScrollView)findViewById(R.id.thumbnails_scroll_view);
-        //backgroundImageView = (ImageView)findViewById(R.id.backgroundImage);
 
         thumbnailsContainer = (LinearLayout)findViewById(R.id.thumbnails_container);
         thumbnailsContainer.setPadding(display.getWidth() / 2, 0,
@@ -64,35 +59,10 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
-    private void initializeViewPager() {
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images);
-        viewPager.setAdapter(pagerAdapter);
-    }
-
-    public ScrollGalleryView addThumbnail(int image) {
-        ImageView thumbnail = new ImageView(context);
-
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(thumbnailSize, thumbnailSize);
-        thumbnail.setLayoutParams(layoutParams);
-        thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        thumbnail.setPadding(10, 10, 10, 10); // add method for setting
-        thumbnail.setImageDrawable(getResources().getDrawable(image));
-
-        thumbnail.setOnClickListener(thumbnailOnClickListener);
-        thumbnailsContainer.addView(thumbnail);
-        return this;
-    }
-
     public ScrollGalleryView addImage(int image) {
+        images.add(image);
         addThumbnail(image);
-        if(!isFirstBackground) {
-            //backgroundImageView.setImageDrawable(getResources().getDrawable(image));
-            images.add(image);
-            pagerAdapter.notifyDataSetChanged();
-            //isFirstBackground = true;
-        }
+        pagerAdapter.notifyDataSetChanged();
         return this;
     }
 
@@ -104,16 +74,48 @@ public class ScrollGalleryView extends LinearLayout {
     private OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            //backgroundImageView.setImageDrawable(((ImageView) v).getDrawable());
-
-            Display display = windowManager.getDefaultDisplay();
-            int thumbnailCoords[] = new int [2];
-            v.getLocationOnScreen(thumbnailCoords);
-
-            int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;
-            int thumbnailDelta = display.getWidth() / 2 - thumbnailCenterX;
-
-            horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
+            scroll(v);
+            viewPager.setCurrentItem((int)v.getTag(), true);
         }
     };
+
+    private ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
+        @Override
+        public void onPageSelected(int position) {
+            scroll(thumbnailsContainer.getChildAt(position));
+        }
+    };
+
+    private ScrollGalleryView addThumbnail(int image) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
+        layoutParams.setMargins(10, 10, 10, 10);
+
+        ImageView thumbnail = new ImageView(context);
+        thumbnail.setLayoutParams(layoutParams);
+        thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        thumbnail.setImageDrawable(getResources().getDrawable(image));
+        thumbnail.setTag(images.size() - 1);
+        thumbnail.setOnClickListener(thumbnailOnClickListener);
+
+        thumbnailsContainer.addView(thumbnail);
+        return this;
+    }
+
+    private void initializeViewPager() {
+        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(viewPagerChangeListener);
+    }
+
+    private void scroll(View thumbnail) {
+        Display display = windowManager.getDefaultDisplay();
+        int thumbnailCoords[] = new int [2];
+        thumbnail.getLocationOnScreen(thumbnailCoords);
+
+        int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;
+        int thumbnailDelta = display.getWidth() / 2 - thumbnailCenterX;
+
+        horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
+    }
 }
