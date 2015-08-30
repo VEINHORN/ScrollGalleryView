@@ -1,6 +1,9 @@
 package com.veinhorn.scrollgalleryview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -89,16 +92,21 @@ public class ScrollGalleryView extends LinearLayout {
     private ScrollGalleryView addThumbnail(int image) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
         layoutParams.setMargins(10, 10, 10, 10);
+        Bitmap thumbnailImage = createThumbnail(image);
 
         ImageView thumbnail = new ImageView(context);
         thumbnail.setLayoutParams(layoutParams);
-        thumbnail.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        thumbnail.setImageDrawable(getResources().getDrawable(image));
+        thumbnail.setImageBitmap(thumbnailImage);
         thumbnail.setTag(images.size() - 1);
         thumbnail.setOnClickListener(thumbnailOnClickListener);
 
         thumbnailsContainer.addView(thumbnail);
         return this;
+    }
+
+    private Bitmap createThumbnail(int image) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), image);
+        return ThumbnailUtils.extractThumbnail(bitmap, thumbnailSize, thumbnailSize);
     }
 
     private void initializeViewPager() {
