@@ -15,7 +15,7 @@ public class MainActivity extends FragmentActivity {
         scrollGalleryView = (ScrollGalleryView)findViewById(R.id.scroll_gallery_view);
         scrollGalleryView
                 .setFragmentManager(getSupportFragmentManager())
-                .setThumbnailSize(150)
+                .setThumbnailSize(100)
                 .addImage(R.drawable.wallpaper1)
                 .addImage(R.drawable.wallpaper2)
                 .addImage(R.drawable.wallpaper3)
