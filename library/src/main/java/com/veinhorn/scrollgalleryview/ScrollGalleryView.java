@@ -3,6 +3,7 @@ package com.veinhorn.scrollgalleryview;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.ThumbnailUtils;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
@@ -25,7 +26,7 @@ import java.util.List;
 public class ScrollGalleryView extends LinearLayout {
     private FragmentManager fragmentManager;
     private Context context;
-    private WindowManager windowManager;
+    private Point displayProps;
     private int thumbnailSize; // width and height in pixels
 
     // Views
@@ -33,6 +34,7 @@ public class ScrollGalleryView extends LinearLayout {
     private HorizontalScrollView horizontalScrollView;
     private ViewPager viewPager;
     ////////
+
     private PagerAdapter pagerAdapter;
     private List<Integer> images;
 
@@ -43,17 +45,15 @@ public class ScrollGalleryView extends LinearLayout {
         images = new ArrayList<>();
 
         setOrientation(VERTICAL);
-        windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-
+        displayProps = getDisplaySize();
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.scroll_gallery_view, this, true);
 
         horizontalScrollView = (HorizontalScrollView)findViewById(R.id.thumbnails_scroll_view);
 
         thumbnailsContainer = (LinearLayout)findViewById(R.id.thumbnails_container);
-        thumbnailsContainer.setPadding(display.getWidth() / 2, 0,
-                display.getWidth() / 2, 0);
+        thumbnailsContainer.setPadding(displayProps.x / 2, 0,
+                displayProps.x / 2, 0);
     }
 
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
@@ -78,7 +78,7 @@ public class ScrollGalleryView extends LinearLayout {
         @Override
         public void onClick(View v) {
             scroll(v);
-            viewPager.setCurrentItem((int)v.getTag(), true);
+            viewPager.setCurrentItem((int) v.getTag(), true);
         }
     };
 
@@ -88,6 +88,14 @@ public class ScrollGalleryView extends LinearLayout {
             scroll(thumbnailsContainer.getChildAt(position));
         }
     };
+
+    private Point getDisplaySize() {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        return point;
+    }
 
     private ScrollGalleryView addThumbnail(int image) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
@@ -119,12 +127,11 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     private void scroll(View thumbnail) {
-        Display display = windowManager.getDefaultDisplay();
         int thumbnailCoords[] = new int [2];
         thumbnail.getLocationOnScreen(thumbnailCoords);
 
         int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;
-        int thumbnailDelta = display.getWidth() / 2 - thumbnailCenterX;
+        int thumbnailDelta = displayProps.x / 2 - thumbnailCenterX;
 
         horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
     }
