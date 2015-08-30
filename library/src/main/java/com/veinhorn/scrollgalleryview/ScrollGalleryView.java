@@ -90,18 +90,20 @@ public class ScrollGalleryView extends LinearLayout {
     };
 
     private ScrollGalleryView addThumbnail(int image) {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
-        layoutParams.setMargins(10, 10, 10, 10);
-        Bitmap thumbnailImage = createThumbnail(image);
-
-        ImageView thumbnail = new ImageView(context);
-        thumbnail.setLayoutParams(layoutParams);
-        thumbnail.setImageBitmap(thumbnailImage);
-        thumbnail.setTag(images.size() - 1);
-        thumbnail.setOnClickListener(thumbnailOnClickListener);
-
-        thumbnailsContainer.addView(thumbnail);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
+        lp.setMargins(10, 10, 10, 10);
+        Bitmap thumbnail = createThumbnail(image);
+        thumbnailsContainer.addView(createThumbnailView(lp, thumbnail));
         return this;
+    }
+
+    private ImageView createThumbnailView(LinearLayout.LayoutParams lp, Bitmap thumbnail) {
+        ImageView thumbnailView = new ImageView(context);
+        thumbnailView.setLayoutParams(lp);
+        thumbnailView.setImageBitmap(thumbnail);
+        thumbnailView.setTag(images.size() - 1);
+        thumbnailView.setOnClickListener(thumbnailOnClickListener);
+        return thumbnailView;
     }
 
     private Bitmap createThumbnail(int image) {
