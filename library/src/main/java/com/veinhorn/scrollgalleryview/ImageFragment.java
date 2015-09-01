@@ -1,5 +1,6 @@
 package com.veinhorn.scrollgalleryview;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         ImageView backgroundImage = (ImageView)rootView.findViewById(R.id.backgroundImage);
-        backgroundImage.setImageDrawable(getResources().getDrawable(getArguments().getInt("image")));
+        backgroundImage.setImageBitmap((Bitmap)getArguments().getParcelable("image"));
         return rootView;
     }
 }

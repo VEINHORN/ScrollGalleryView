@@ -1,5 +1,6 @@
 package com.veinhorn.scrollgalleryview;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,9 +12,9 @@ import java.util.List;
  * Created by veinhorn on 29.8.15.
  */
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    private List<Integer> images;
+    private List<Bitmap> images;
 
-    public ScreenSlidePagerAdapter(FragmentManager fm, List<Integer> images) {
+    public ScreenSlidePagerAdapter(FragmentManager fm, List<Bitmap> images) {
         super(fm);
         this.images = images;
     }
@@ -22,7 +23,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         Fragment fragment = new ImageFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("image", images.get(position));
+        bundle.putParcelable("image", images.get(position));
         fragment.setArguments(bundle);
         return fragment;
     }

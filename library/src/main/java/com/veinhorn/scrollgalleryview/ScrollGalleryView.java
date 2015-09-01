@@ -37,7 +37,7 @@ public class ScrollGalleryView extends LinearLayout {
     ////////
 
     private PagerAdapter pagerAdapter;
-    private List<Integer> images;
+    private List<Bitmap> images;
 
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
@@ -64,6 +64,12 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     public ScrollGalleryView addImage(int image) {
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), image);
+        addImage(bitmap);
+        return this;
+    }
+
+    public ScrollGalleryView addImage(Bitmap image) {
         images.add(image);
         addThumbnail(image);
         pagerAdapter.notifyDataSetChanged();
@@ -99,7 +105,7 @@ public class ScrollGalleryView extends LinearLayout {
         return point;
     }
 
-    private ScrollGalleryView addThumbnail(int image) {
+    private ScrollGalleryView addThumbnail(Bitmap image) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
         lp.setMargins(10, 10, 10, 10);
         Bitmap thumbnail = createThumbnail(image);
@@ -116,9 +122,8 @@ public class ScrollGalleryView extends LinearLayout {
         return thumbnailView;
     }
 
-    private Bitmap createThumbnail(int image) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), image);
-        return ThumbnailUtils.extractThumbnail(bitmap, thumbnailSize, thumbnailSize);
+    private Bitmap createThumbnail(Bitmap image) {
+        return ThumbnailUtils.extractThumbnail(image, thumbnailSize, thumbnailSize);
     }
 
     private void initializeViewPager() {

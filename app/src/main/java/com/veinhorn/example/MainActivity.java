@@ -1,5 +1,7 @@
 package com.veinhorn.example;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
@@ -22,6 +24,10 @@ public class MainActivity extends FragmentActivity {
                 .addImage(R.drawable.wallpaper4)
                 .addImage(R.drawable.wallpaper5)
                 .addImage(R.drawable.wallpaper6)
-                .addImage(R.drawable.wallpaper7);
+                .addImage(convertDrawableToBitmap(R.drawable.wallpaper7));
+    }
+
+    private Bitmap convertDrawableToBitmap(int image) {
+        return ((BitmapDrawable)getResources().getDrawable(image)).getBitmap();
     }
 }
