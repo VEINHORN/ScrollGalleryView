@@ -29,6 +29,7 @@ public class ScrollGalleryView extends LinearLayout {
     private Context context;
     private Point displayProps;
     private int thumbnailSize; // width and height in pixels
+    private boolean isZoom;
 
     // Views
     private LinearLayout thumbnailsContainer;
@@ -81,6 +82,11 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    public ScrollGalleryView setZoom(boolean isZoom) {
+        this.isZoom = isZoom;
+        return this;
+    }
+
     private OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -128,7 +134,7 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (ViewPager)findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images, isZoom);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
