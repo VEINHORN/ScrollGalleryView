@@ -38,17 +38,23 @@ public class MainActivity extends FragmentActivity {
 
         scrollGalleryView = (ScrollGalleryView)findViewById(R.id.scroll_gallery_view);
         scrollGalleryView
-                .setFragmentManager(getSupportFragmentManager())
                 .setThumbnailSize(100)
+                .setZoom(true)
+                .setFragmentManager(getSupportFragmentManager())
                 .addImage(R.drawable.wallpaper1)
                 .addImage(R.drawable.wallpaper2)
                 .addImage(R.drawable.wallpaper3)
                 .addImage(R.drawable.wallpaper4)
                 .addImage(R.drawable.wallpaper5)
                 .addImage(R.drawable.wallpaper6)
-                .addImage(R.drawable.wallpaper7);
+                .addImage(convertDrawableToBitmap(R.drawable.wallpaper7));
+    }
+
+    private Bitmap convertDrawableToBitmap(int image) {
+        return ((BitmapDrawable)getResources().getDrawable(image)).getBitmap();
     }
 }
+
 ```
 
 ## License
