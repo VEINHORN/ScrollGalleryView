@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "23"
 
     defaultConfig {
         minSdkVersion 10
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -20,6 +20,33 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
 }
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'scroll-gallery-view'
+
+    publishedGroupId = 'com.veinhorn.scrollgalleryview'
+    libraryName = 'ScrollGalleryView'
+    artifact = 'scroll-gallery-view'
+
+    libraryDescription = 'Create awesome image gallery using ScrollGalleryView. Just add your images.'
+
+    siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
+    gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
+
+    libraryVersion = '1.0.1'
+
+    developerId = 'veinhorn'
+    developerName = 'Boris Korogvich'
+    developerEmail = 'b.korogvich@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
