@@ -1,18 +1,19 @@
 # ScrollGalleryView
 
-Create awesome image gallery using ScrollGalleryView. Just add your images.
+Android library for creating image gallery with thumbnails on bottom of the screen. Just add your images using simple API.
 
 ![ScrollGalleryView](http://i.imgur.com/xrBt4Xx.gif)
 
 ##Features
 - Easy way to select images in gallery (thumbnails)
 - Zooming
+- Simple API
 - Thumbnail borders
 
 ## Sample application
 The sample application published on Google Play.
 
-[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](http://play.google.com)
+[![Get it on Google Play](http://www.android.com/images/brand/get_it_on_play_logo_small.png)](https://play.google.com/store/apps/details?id=com.veinhorn.scrollgalleryview)
 
 ##Usage
 ```xml
@@ -56,6 +57,16 @@ public class MainActivity extends FragmentActivity {
 }
 
 ```
+
+## Gradle integration
+```gradle
+compile 'com.veinhorn.scrollgalleryview:library:1.0.2'
+```
+
+## Dependencies
+[Android Support Library](http://developer.android.com/tools/support-library/index.html)
+
+[PhotoView](https://github.com/chrisbanes/PhotoView)
 
 ## License
 
