@@ -18,6 +18,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,30 @@ public class ScrollGalleryView extends LinearLayout {
     public ScrollGalleryView addImage(Bitmap image) {
         images.add(image);
         addThumbnail(image);
+        pagerAdapter.notifyDataSetChanged();
+        return this;
+    }
+
+    public ScrollGalleryView addImages(File fromDir) {
+        File[] files = fromDir.listFiles();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+
+        for (int i=0; files != null && i < files.length; i++) {
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(files[i].getAbsolutePath(), options);
+            int imgWidth = options.outWidth;
+            int imgHeight = options.outHeight;
+
+            int maxWidth = displayProps.x;
+            int maxHeight = displayProps.y;
+
+            /* calculate appropriate inSampleSize for high-res images from SDCARD */
+            options.inSampleSize = calculateInSampleSize(imgWidth, imgHeight, maxWidth, maxHeight);
+            options.inJustDecodeBounds = false;
+            Bitmap bitmap = BitmapFactory.decodeFile(files[i].getAbsolutePath(), options);
+            images.add(bitmap);
+            addThumbnail(bitmap);
+        }
         pagerAdapter.notifyDataSetChanged();
         return this;
     }
@@ -147,5 +172,13 @@ public class ScrollGalleryView extends LinearLayout {
         int thumbnailDelta = displayProps.x / 2 - thumbnailCenterX;
 
         horizontalScrollView.smoothScrollBy(-thumbnailDelta, 0);
+    }
+
+    private int calculateInSampleSize(int imgWidth, int imgHeight, int maxWidth, int maxHeight) {
+        int inSampleSize = 1;
+        while (imgWidth / inSampleSize > maxWidth || imgHeight / inSampleSize > maxHeight) {
+            inSampleSize *= 2;
+        }
+        return inSampleSize;
     }
 }
