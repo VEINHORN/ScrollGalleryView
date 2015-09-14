@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -30,14 +30,14 @@ ext {
 
     publishedGroupId = 'com.veinhorn.scrollgalleryview'
     libraryName = 'ScrollGalleryView'
-    artifact = 'scroll-gallery-view'
+    artifact = 'library'
 
     libraryDescription = 'Create awesome image gallery using ScrollGalleryView. Just add your images.'
 
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.2'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
