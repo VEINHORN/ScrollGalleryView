@@ -181,4 +181,15 @@ public class ScrollGalleryView extends LinearLayout {
         }
         return inSampleSize;
     }
+    
+    //Not-elegant fix to error zooming :  java.lang.IllegalArgumentException: pointerIndex out of range
+    //                          at android.view.MotionEvent.nativeGetAxisValue(Native Method)
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        try {
+            return super.onInterceptTouchEvent(ev);
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
