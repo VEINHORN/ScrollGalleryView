@@ -158,7 +158,7 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     private void initializeViewPager() {
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        viewPager = (HackyViewPager)findViewById(R.id.viewPager);
         pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images, isZoom);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
@@ -180,16 +180,5 @@ public class ScrollGalleryView extends LinearLayout {
             inSampleSize *= 2;
         }
         return inSampleSize;
-    }
-    
-    //Not-elegant fix to error zooming :  java.lang.IllegalArgumentException: pointerIndex out of range
-    //                          at android.view.MotionEvent.nativeGetAxisValue(Native Method)
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        try {
-            return super.onInterceptTouchEvent(ev);
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        }
-        return false;
     }
 }
