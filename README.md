@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity {
 
 ## Gradle integration
 ```gradle
-compile 'com.veinhorn.scrollgalleryview:library:1.0.2'
+compile 'com.veinhorn.scrollgalleryview:library:1.0.3'
 ```
 
 ## Dependencies
