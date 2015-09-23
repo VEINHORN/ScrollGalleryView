@@ -102,6 +102,16 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    /**
+     * Set the current item displayed in the view pager.
+     * @param i     a zero-based index
+     * @return
+     */
+    public ScrollGalleryView setCurrentItem(int i) {
+        viewPager.setCurrentItem(i, false);
+        return this;
+    }
+
     public ScrollGalleryView setThumbnailSize(int thumbnailSize) {
         this.thumbnailSize = thumbnailSize;
         return this;
