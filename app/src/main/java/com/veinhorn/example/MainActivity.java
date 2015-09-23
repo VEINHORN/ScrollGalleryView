@@ -25,7 +25,8 @@ public class MainActivity extends FragmentActivity {
                 .addImage(R.drawable.wallpaper4)
                 .addImage(R.drawable.wallpaper5)
                 .addImage(R.drawable.wallpaper6)
-                .addImage(convertDrawableToBitmap(R.drawable.wallpaper7));
+                .addImage(convertDrawableToBitmap(R.drawable.wallpaper7))
+                .setCurrentItem(2);
     }
 
     private Bitmap convertDrawableToBitmap(int image) {
