@@ -26,7 +26,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = new ImageFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("image", images.get(position));
-        bundle.putBoolean("isZoom", isZoom);
+        bundle.putBoolean("zoom", isZoom);
         fragment.setArguments(bundle);
         return fragment;
     }

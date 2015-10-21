@@ -26,7 +26,7 @@ public class ImageFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         backgroundImage = (ImageView)rootView.findViewById(R.id.backgroundImage);
         backgroundImage.setImageBitmap((Bitmap) getArguments().getParcelable("image"));
-        if(getArguments().getBoolean("isZoom")) photoViewAttacher = new PhotoViewAttacher(backgroundImage);
+        if(getArguments().getBoolean("zoom")) photoViewAttacher = new PhotoViewAttacher(backgroundImage);
         viewPager = getViewPager();
 
         if(savedInstanceState != null) {

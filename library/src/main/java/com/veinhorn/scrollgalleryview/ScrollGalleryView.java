@@ -29,14 +29,18 @@ public class ScrollGalleryView extends LinearLayout {
     private FragmentManager fragmentManager;
     private Context context;
     private Point displayProps;
+
+    // Options
     private int thumbnailSize; // width and height in pixels
-    private boolean isZoom;
+    private boolean zoomEnabled;
+    private boolean thumbnailsHiddenEnabled;
+    //
 
     // Views
     private LinearLayout thumbnailsContainer;
     private HorizontalScrollView horizontalScrollView;
     private ViewPager viewPager;
-    ////////
+    //
 
     private PagerAdapter pagerAdapter;
     private List<Bitmap> images;
@@ -117,8 +121,13 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
-    public ScrollGalleryView setZoom(boolean isZoom) {
-        this.isZoom = isZoom;
+    public ScrollGalleryView setZoom(boolean zoomEnabled) {
+        this.zoomEnabled = zoomEnabled;
+        return this;
+    }
+
+    public ScrollGalleryView hideThumbnails(boolean thumbnailsHiddenEnabled) {
+        this.thumbnailsHiddenEnabled = thumbnailsHiddenEnabled;
         return this;
     }
 
@@ -169,7 +178,7 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager)findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images, isZoom);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, images, zoomEnabled);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
