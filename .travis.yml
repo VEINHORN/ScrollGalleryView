@@ -1,5 +1,8 @@
 language: android
 
+before_script:
+  - echo "sdk.dir=$ANDROID_HOME" > local.properties
+
 android:
   components:
     - build-tools-23.0.1
