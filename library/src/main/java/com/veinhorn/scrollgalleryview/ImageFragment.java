@@ -1,6 +1,6 @@
 package com.veinhorn.scrollgalleryview;
 
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,18 +15,36 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * Created by veinhorn on 29.8.15.
  */
 public class ImageFragment extends Fragment {
+
+    public static final String IS_VIDEO = "isVideo";
+    public static final String URL = "url";
     private static final String IS_LOCKED = "isLocked";
+    private MediaInfo mMediaInfo;
+
     private HackyViewPager viewPager;
     private ImageView backgroundImage;
     private PhotoViewAttacher photoViewAttacher;
+
+    public void setMediaInfo(MediaInfo mediaInfo) {
+        mMediaInfo = mediaInfo;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         backgroundImage = (ImageView)rootView.findViewById(R.id.backgroundImage);
-        backgroundImage.setImageBitmap((Bitmap) getArguments().getParcelable("image"));
-        if(getArguments().getBoolean("zoom")) photoViewAttacher = new PhotoViewAttacher(backgroundImage);
+        backgroundImage.setImageBitmap(mMediaInfo.getLoader().loadBitmap(getActivity()));
+        if (getArguments().getBoolean(IS_VIDEO)) {
+            backgroundImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    displayVideo(getArguments().getString(URL));
+                }
+            });
+        } else if (getArguments().getBoolean("zoom")) {
+            photoViewAttacher = new PhotoViewAttacher(backgroundImage);
+        }
         viewPager = getViewPager();
 
         if(savedInstanceState != null) {
@@ -35,6 +53,13 @@ public class ImageFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void displayVideo(String url) {
+        Intent intent = new Intent(this.getContext(),
+                VideoPlayerActivity.class);
+        intent.putExtra(URL, url);
+        this.getContext().startActivity(intent);
     }
 
     @Override
