@@ -1,4 +1,4 @@
-# ScrollGalleryView
+# ScrollGalleryView ![](https://travis-ci.org/inver/ScrollGalleryView.svg)
 
 Android library for creating image gallery with thumbnails on bottom of the screen. Just add your images using simple API.
 
