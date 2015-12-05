@@ -37,10 +37,10 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ImageFragment fragment = new ImageFragment();
         fragment.setMediaInfo(mediaInfo);
         Bundle bundle = new Bundle();
-        bundle.putBoolean("zoom", isZoom);
+        bundle.putBoolean(Constants.ZOOM, isZoom);
         if (mediaInfo.isVideo()) {
-            bundle.putBoolean("isVideo", true);
-            bundle.putCharSequence("url", mediaInfo.getURL());
+            bundle.putBoolean(Constants.IS_VIDEO, true);
+            bundle.putCharSequence(Constants.URL, mediaInfo.getURL());
         }
         fragment.setArguments(bundle);
         return fragment;

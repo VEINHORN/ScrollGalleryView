@@ -1,9 +1,9 @@
 package com.veinhorn.scrollgalleryview;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
@@ -38,24 +38,23 @@ public class ScrollGalleryView extends LinearLayout {
     // Views
     private LinearLayout thumbnailsContainer;
     private HorizontalScrollView horizontalScrollView;
-    private ViewPager viewPager;
+    private final ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
+        @Override
+        public void onPageSelected(int position) {
+            scroll(thumbnailsContainer.getChildAt(position));
+        }
+    };
     //
-
-    private PagerAdapter pagerAdapter;
-    private List<MediaInfo> mListOfMedia;
-    private OnClickListener thumbnailOnClickListener = new OnClickListener() {
+    private ViewPager viewPager;
+    private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             scroll(v);
             viewPager.setCurrentItem((int) v.getTag(), true);
         }
     };
-    private ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
-        @Override
-        public void onPageSelected(int position) {
-            scroll(thumbnailsContainer.getChildAt(position));
-        }
-    };
+    private PagerAdapter pagerAdapter;
+    private List<MediaInfo> mListOfMedia;
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -67,11 +66,10 @@ public class ScrollGalleryView extends LinearLayout {
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.scroll_gallery_view, this, true);
 
-        horizontalScrollView = (HorizontalScrollView)findViewById(R.id.thumbnails_scroll_view);
+        horizontalScrollView = (HorizontalScrollView) findViewById(R.id.thumbnails_scroll_view);
 
-        thumbnailsContainer = (LinearLayout)findViewById(R.id.thumbnails_container);
-        thumbnailsContainer.setPadding(displayProps.x / 2, 0,
-                displayProps.x / 2, 0);
+        thumbnailsContainer = (LinearLayout) findViewById(R.id.thumbnails_container);
+        thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
     }
 
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
@@ -82,14 +80,22 @@ public class ScrollGalleryView extends LinearLayout {
 
     public ScrollGalleryView addMedia(MediaInfo mediaInfo) {
         mListOfMedia.add(mediaInfo);
-        addThumbnail(mediaInfo.getLoader().loadBitmap((Activity) getContext()));
+
+        final ImageView thumbnail = addThumbnail(getDefaultThumbnail());
+        mediaInfo.getLoader().loadThumbnail(getContext(), thumbnail);
+
         pagerAdapter.notifyDataSetChanged();
         return this;
     }
 
+    private Bitmap getDefaultThumbnail() {
+        return ((BitmapDrawable) getContext().getResources().getDrawable(R.drawable.ic_image)).getBitmap();
+    }
+
     /**
      * Set the current item displayed in the view pager.
-     * @param i     a zero-based index
+     *
+     * @param i a zero-based index
      * @return
      */
     public ScrollGalleryView setCurrentItem(int i) {
@@ -116,17 +122,22 @@ public class ScrollGalleryView extends LinearLayout {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
         Point point = new Point();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) display.getSize(point);
-        else point.set(display.getWidth(), display.getHeight());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            display.getSize(point);
+        } else {
+            point.set(display.getWidth(), display.getHeight());
+        }
         return point;
     }
 
-    private ScrollGalleryView addThumbnail(Bitmap image) {
+    private ImageView addThumbnail(Bitmap image) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
         lp.setMargins(10, 10, 10, 10);
         Bitmap thumbnail = createThumbnail(image);
-        thumbnailsContainer.addView(createThumbnailView(lp, thumbnail));
-        return this;
+
+        ImageView thumbnailView = createThumbnailView(lp, thumbnail);
+        thumbnailsContainer.addView(thumbnailView);
+        return thumbnailView;
     }
 
     private ImageView createThumbnailView(LinearLayout.LayoutParams lp, Bitmap thumbnail) {
@@ -143,14 +154,14 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     private void initializeViewPager() {
-        viewPager = (HackyViewPager)findViewById(R.id.viewPager);
+        viewPager = (HackyViewPager) findViewById(R.id.viewPager);
         pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
 
     private void scroll(View thumbnail) {
-        int thumbnailCoords[] = new int [2];
+        int thumbnailCoords[] = new int[2];
         thumbnail.getLocationOnScreen(thumbnailCoords);
 
         int thumbnailCenterX = thumbnailCoords[0] + thumbnailSize / 2;

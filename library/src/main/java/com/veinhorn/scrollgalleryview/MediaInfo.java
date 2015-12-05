@@ -1,8 +1,9 @@
 package com.veinhorn.scrollgalleryview;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
 
 import java.util.regex.Pattern;
 
@@ -21,11 +22,11 @@ public class MediaInfo {
     }
 
     public static MediaInfo imageLoader(int id) {
-        return new MediaInfo().setLoader(new ImageLoader(id));
+        return new MediaInfo().setLoader(new DefaultImageLoader(id));
     }
 
     public static MediaInfo imageLoader(Bitmap bitmap) {
-        return new MediaInfo().setLoader(new ImageLoader(bitmap));
+        return new MediaInfo().setLoader(new DefaultImageLoader(bitmap));
     }
 
     public static MediaInfo mediaLoader(MediaLoader mediaLoader) {
@@ -33,22 +34,16 @@ public class MediaInfo {
     }
 
     public boolean isImage() {
-        return (mLoader instanceof ImageLoader || isImageURL(getURL()))
+        return (mLoader instanceof DefaultImageLoader || isImageURL(getURL()))
                 && !isVideoURL(getURL());
     }
 
     private boolean isImageURL(String url) {
-        if (url != null) {
-            return IMAGE_FILES_REGEX.matcher(url).matches();
-        }
-        return false;
+        return url != null && IMAGE_FILES_REGEX.matcher(url).matches();
     }
 
     private boolean isVideoURL(String url) {
-        if (url != null) {
-            return VIDEO_FILES_REGEX.matcher(url).matches();
-        }
-        return false;
+        return url != null && VIDEO_FILES_REGEX.matcher(url).matches();
     }
 
     public boolean isVideo() {
@@ -62,7 +57,7 @@ public class MediaInfo {
     public MediaInfo setURL(String URL) {
         mURL = URL;
         if (isVideoURL(mURL)) {
-            setLoader(new ImageLoader(R.drawable.video_icon));
+            setLoader(new DefaultImageLoader(R.drawable.video_icon));
         }
         return this;
     }
@@ -76,34 +71,41 @@ public class MediaInfo {
         return this;
     }
 
-
     public interface MediaLoader {
-        Bitmap loadBitmap(Activity activity);
+        void loadMedia(Context context, ImageView imageView);
+
+        void loadThumbnail(Context context, ImageView thumbnailView);
     }
 
-    private static class ImageLoader implements MediaLoader {
+    public static class DefaultImageLoader implements MediaLoader {
         private int mId;
         private Bitmap mBitmap;
 
-        public ImageLoader() {
-
-        }
-
-        public ImageLoader(int id) {
+        public DefaultImageLoader(int id) {
             mId = id;
         }
 
-        public ImageLoader(Bitmap bitmap) {
+        public DefaultImageLoader(Bitmap bitmap) {
             mBitmap = bitmap;
         }
 
-        public Bitmap loadBitmap(Activity activity) {
+        @Override
+        public void loadMedia(Context context, ImageView imageView) {
+            //we aren't loading bitmap, because full image loaded on thumbnail step
+            imageView.setImageBitmap(mBitmap);
+        }
+
+        @Override
+        public void loadThumbnail(Context context, ImageView thumbnailView) {
+            loadBitmap(context);
+            thumbnailView.setImageBitmap(mBitmap);
+        }
+
+        private void loadBitmap(Context context) {
             if (mBitmap == null) {
-                mBitmap = ((BitmapDrawable) activity
-                        .getResources()
-                        .getDrawable(mId)).getBitmap();
+                mBitmap = ((BitmapDrawable) context.getResources().getDrawable(mId)).getBitmap();
             }
-            return mBitmap;
         }
     }
+
 }
