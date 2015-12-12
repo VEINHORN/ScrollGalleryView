@@ -1,4 +1,5 @@
 language: android
+
 android:
   components:
     - platform-tools
@@ -15,5 +16,6 @@ android:
 
 before_script:
     - chmod +x gradlew
+    - echo "sdk.dir=$ANDROID_HOME" > local.properties
 
 script: "./gradlew build"
