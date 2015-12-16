@@ -18,7 +18,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.veinhorn.scrollgalleryview.loader.MediaLoader;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -79,17 +82,37 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     public ScrollGalleryView addMedia(MediaInfo mediaInfo) {
-        mListOfMedia.add(mediaInfo);
+        if (mediaInfo == null) {
+            throw new NullPointerException("Infos may not be null!");
+        }
 
-        final ImageView thumbnail = addThumbnail(getDefaultThumbnail());
-        mediaInfo.getLoader().loadThumbnail(getContext(), thumbnail);
+        return addMedia(Collections.singletonList(mediaInfo));
+    }
 
-        pagerAdapter.notifyDataSetChanged();
+    public ScrollGalleryView addMedia(List<MediaInfo> infos) {
+        if (infos == null) {
+            throw new NullPointerException("Infos may not be null!");
+        }
+
+        for (MediaInfo info : infos) {
+            mListOfMedia.add(info);
+
+            final ImageView thumbnail = addThumbnail(getDefaultThumbnail());
+            info.getLoader().loadThumbnail(getContext(), thumbnail, new MediaLoader.SuccessCallback() {
+                @Override
+                public void onSuccess() {
+                    thumbnail.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+            });
+
+            pagerAdapter.notifyDataSetChanged();
+        }
         return this;
     }
 
+
     private Bitmap getDefaultThumbnail() {
-        return ((BitmapDrawable) getContext().getResources().getDrawable(R.drawable.ic_image)).getBitmap();
+        return ((BitmapDrawable) getContext().getResources().getDrawable(R.drawable.placeholder_image)).getBitmap();
     }
 
     /**
@@ -115,6 +138,7 @@ public class ScrollGalleryView extends LinearLayout {
 
     public ScrollGalleryView hideThumbnails(boolean thumbnailsHiddenEnabled) {
         this.thumbnailsHiddenEnabled = thumbnailsHiddenEnabled;
+        horizontalScrollView.setVisibility(GONE);
         return this;
     }
 
@@ -146,6 +170,7 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailView.setImageBitmap(thumbnail);
         thumbnailView.setTag(mListOfMedia.size() - 1);
         thumbnailView.setOnClickListener(thumbnailOnClickListener);
+        thumbnailView.setScaleType(ImageView.ScaleType.CENTER);
         return thumbnailView;
     }
 
