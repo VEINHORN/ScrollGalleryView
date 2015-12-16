@@ -25,7 +25,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-    provided 'com.squareup.picasso:picasso:2.5.2'
 }
 
 ext {
