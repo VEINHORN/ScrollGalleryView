@@ -13,19 +13,16 @@ import android.widget.VideoView;
  */
 public class VideoPlayerActivity extends Activity {
 
-
-    public static final String URL = "url";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String url = getIntent().getExtras().getString(URL);
+        String url = getIntent().getExtras().getString(Constants.URL);
         setContentView(R.layout.video_fragment);
         final VideoView videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                View progress= findViewById(R.id.videoProgress);
+                View progress = findViewById(R.id.videoProgress);
                 progress.setVisibility(View.GONE);
 
                 videoView.requestFocus();

@@ -17,7 +17,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     private boolean isZoom = false;
 
     public ScreenSlidePagerAdapter(FragmentManager fm, List<MediaInfo> listOfMedia,
-            boolean isZoom) {
+                                   boolean isZoom) {
         super(fm);
         this.mListOfMedia = listOfMedia;
         this.isZoom = isZoom;
@@ -37,11 +37,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         ImageFragment fragment = new ImageFragment();
         fragment.setMediaInfo(mediaInfo);
         Bundle bundle = new Bundle();
-        bundle.putBoolean("zoom", isZoom);
-        if(mediaInfo.isVideo()) {
-            bundle.putBoolean("isVideo", true);
-            bundle.putCharSequence("url", mediaInfo.getURL());
-        }
+        bundle.putBoolean(Constants.ZOOM, isZoom);
         fragment.setArguments(bundle);
         return fragment;
     }
