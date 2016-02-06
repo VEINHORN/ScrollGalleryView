@@ -1,5 +1,6 @@
-# ScrollGalleryView ![](https://travis-ci.org/inver/ScrollGalleryView.svg)
+# ScrollGalleryView
 
+![](https://travis-ci.org/inver/ScrollGalleryView.svg)
 [![Join the chat at https://gitter.im/VEINHORN/ScrollGalleryView](https://badges.gitter.im/VEINHORN/ScrollGalleryView.svg)](https://gitter.im/VEINHORN/ScrollGalleryView?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Android library for creating image gallery with thumbnails on bottom of the screen. Just add your images using simple API.
