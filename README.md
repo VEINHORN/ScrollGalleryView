@@ -93,7 +93,8 @@ public class MainActivity extends FragmentActivity {
                 }))
                 .addMedia(MediaInfo.mediaLoader(
                         new DefaultVideoLoader("http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4",                            R.mipmap.default_video)))
-                .addMedia(infos);
+                .addMedia(infos)
+                .setCurrentItem(2);
     }
 
     private Bitmap convertDrawableToBitmap(int image) {
