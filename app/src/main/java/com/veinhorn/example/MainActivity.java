@@ -5,9 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.veinhorn.scrollgalleryview.MediaInfo;
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
@@ -38,22 +36,6 @@ public class MainActivity extends FragmentActivity {
         for (String url : images) infos.add(MediaInfo.mediaLoader(new PicassoImageLoader(url)));
 
         scrollGalleryView = (ScrollGalleryView) findViewById(R.id.scroll_gallery_view);
-        scrollGalleryView.getViewPager().setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Toast.makeText(MainActivity.this, "yo nigga", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         scrollGalleryView
                 .setThumbnailSize(100)
                 .setZoom(true)
