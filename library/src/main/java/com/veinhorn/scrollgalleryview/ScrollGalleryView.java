@@ -84,6 +84,28 @@ public class ScrollGalleryView extends LinearLayout {
         return viewPager;
     }
 
+    /**
+     * Set up OnPageChangeListener for internal ViewPager
+     * @param listener
+     */
+    public void addOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
+        viewPager.clearOnPageChangeListeners();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override public void onPageSelected(int position) {
+                scroll(thumbnailsContainer.getChildAt(position));
+                listener.onPageSelected(position);
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+                listener.onPageScrollStateChanged(state);
+            }
+        });
+    }
+
     public ScrollGalleryView addMedia(MediaInfo mediaInfo) {
         if (mediaInfo == null) {
             throw new NullPointerException("Infos may not be null!");
