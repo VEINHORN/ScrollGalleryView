@@ -31,33 +31,32 @@ public class ScrollGalleryView extends LinearLayout {
     private FragmentManager fragmentManager;
     private Context context;
     private Point displayProps;
+    private PagerAdapter pagerAdapter;
+    private List<MediaInfo> mListOfMedia;
 
     // Options
     private int thumbnailSize; // width and height in pixels
     private boolean zoomEnabled;
     private boolean thumbnailsHiddenEnabled;
-    //
 
     // Views
     private LinearLayout thumbnailsContainer;
     private HorizontalScrollView horizontalScrollView;
+    private ViewPager viewPager;
+
+    // Listeners
     private final ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
-        @Override
-        public void onPageSelected(int position) {
+        @Override public void onPageSelected(int position) {
             scroll(thumbnailsContainer.getChildAt(position));
         }
     };
-    //
-    private ViewPager viewPager;
+
     private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        @Override public void onClick(View v) {
             scroll(v);
             viewPager.setCurrentItem((int) v.getTag(), true);
         }
     };
-    private PagerAdapter pagerAdapter;
-    private List<MediaInfo> mListOfMedia;
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -79,6 +78,32 @@ public class ScrollGalleryView extends LinearLayout {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
         return this;
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
+    /**
+     * Set up OnPageChangeListener for internal ViewPager
+     * @param listener
+     */
+    public void addOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
+        viewPager.clearOnPageChangeListeners();
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override public void onPageSelected(int position) {
+                scroll(thumbnailsContainer.getChildAt(position));
+                listener.onPageSelected(position);
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+                listener.onPageScrollStateChanged(state);
+            }
+        });
     }
 
     public ScrollGalleryView addMedia(MediaInfo mediaInfo) {
@@ -110,11 +135,6 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
-
-    private Bitmap getDefaultThumbnail() {
-        return ((BitmapDrawable) getContext().getResources().getDrawable(R.drawable.placeholder_image)).getBitmap();
-    }
-
     /**
      * Set the current item displayed in the view pager.
      *
@@ -140,6 +160,10 @@ public class ScrollGalleryView extends LinearLayout {
         this.thumbnailsHiddenEnabled = thumbnailsHiddenEnabled;
         horizontalScrollView.setVisibility(GONE);
         return this;
+    }
+
+    private Bitmap getDefaultThumbnail() {
+        return ((BitmapDrawable) getContext().getResources().getDrawable(R.drawable.placeholder_image)).getBitmap();
     }
 
     private Point getDisplaySize() {
