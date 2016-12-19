@@ -39,7 +39,9 @@ public class ImageFragment extends Fragment {
         if (savedInstanceState != null) {
             boolean isLocked = savedInstanceState.getBoolean(Constants.IS_LOCKED, false);
             viewPager.setLocked(isLocked);
-            backgroundImage.setImageBitmap((Bitmap) savedInstanceState.getParcelable(Constants.IMAGE));
+            if (savedInstanceState.containsKey(Constants.IMAGE)) {
+                backgroundImage.setImageBitmap((Bitmap) savedInstanceState.getParcelable(Constants.IMAGE));
+            }
             createViewAttacher(savedInstanceState);
         }
 
@@ -70,12 +72,18 @@ public class ImageFragment extends Fragment {
         if (isViewPagerActive()) {
             outState.putBoolean(Constants.IS_LOCKED, viewPager.isLocked());
         }
-        outState.putParcelable(Constants.IMAGE, ((BitmapDrawable) backgroundImage.getDrawable()).getBitmap());
+        if (isBackgroundImageActive()) {
+            outState.putParcelable(Constants.IMAGE, ((BitmapDrawable) backgroundImage.getDrawable()).getBitmap());
+        }
         outState.putBoolean(Constants.ZOOM, photoViewAttacher != null);
         super.onSaveInstanceState(outState);
     }
 
     private boolean isViewPagerActive() {
         return viewPager != null;
+    }
+
+    private boolean isBackgroundImageActive() {
+        return backgroundImage != null && backgroundImage.getDrawable() != null;
     }
 }
