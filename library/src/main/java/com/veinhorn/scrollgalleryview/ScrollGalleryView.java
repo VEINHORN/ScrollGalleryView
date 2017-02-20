@@ -146,6 +146,10 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    public int getCurrentItem() {
+        return viewPager.getCurrentItem();
+    }
+
     public ScrollGalleryView setThumbnailSize(int thumbnailSize) {
         this.thumbnailSize = thumbnailSize;
         return this;
