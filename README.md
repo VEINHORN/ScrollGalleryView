@@ -7,7 +7,7 @@ Android library for creating image/video gallery with thumbnails on bottom of th
 
 ![ScrollGalleryView](http://i.imgur.com/xrBt4Xx.gif)
 
-##Features
+## Features
 - Easy way to select images in gallery (thumbnails)
 - Zooming
 - Simple API
@@ -23,7 +23,7 @@ The sample application published on Google Play.
 compile 'com.veinhorn.scrollgalleryview:library:1.0.5'
 ```
 
-##Usage
+## Usage
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
