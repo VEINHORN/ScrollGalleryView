@@ -8,7 +8,6 @@
         android:id="@+id/backgroundImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000"
         android:scaleType="center"
         android:src="@drawable/placeholder_image" />
 </LinearLayout>

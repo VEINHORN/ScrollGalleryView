@@ -54,7 +54,7 @@ public class ScrollGalleryView extends LinearLayout {
     private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override public void onClick(View v) {
             scroll(v);
-            viewPager.setCurrentItem((int) v.getTag(), true);
+            viewPager.setCurrentItem((int) v.getId(), true);
         }
     };
 
@@ -196,7 +196,7 @@ public class ScrollGalleryView extends LinearLayout {
         ImageView thumbnailView = new ImageView(context);
         thumbnailView.setLayoutParams(lp);
         thumbnailView.setImageBitmap(thumbnail);
-        thumbnailView.setTag(mListOfMedia.size() - 1);
+        thumbnailView.setId(mListOfMedia.size() - 1);
         thumbnailView.setOnClickListener(thumbnailOnClickListener);
         thumbnailView.setScaleType(ImageView.ScaleType.CENTER);
         return thumbnailView;
