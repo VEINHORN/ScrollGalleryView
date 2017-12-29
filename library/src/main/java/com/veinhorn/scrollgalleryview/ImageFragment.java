@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
-
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by veinhorn on 29.8.15.
