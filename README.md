@@ -1,6 +1,6 @@
 # ScrollGalleryView
 
-![](https://travis-ci.org/inver/ScrollGalleryView.svg)
+[![Build Status](https://travis-ci.org/VEINHORN/ScrollGalleryView.svg?branch=master)](https://travis-ci.org/VEINHORN/ScrollGalleryView)
 [![Join the chat at https://gitter.im/VEINHORN/ScrollGalleryView](https://badges.gitter.im/VEINHORN/ScrollGalleryView.svg)](https://gitter.im/VEINHORN/ScrollGalleryView?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Android library for creating image/video gallery with thumbnails on bottom of the screen. Just add your images using simple API.
@@ -20,7 +20,7 @@ The sample application published on Google Play.
 
 ## Gradle Dependency
 ```gradle
-compile 'com.veinhorn.scrollgalleryview:library:1.0.5'
+compile 'com.veinhorn.scrollgalleryview:library:1.0.6'
 ```
 
 ## Usage
@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity {
 
 ## License
 
-    Copyright 2015, 2015 Boris Korogvich
+    Copyright 2015, 2017 Boris Korogvich
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
