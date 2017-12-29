@@ -1,16 +1,13 @@
 package com.veinhorn.scrollgalleryview;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.github.chrisbanes.photoview.PhotoViewAttacher;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 /**
@@ -21,8 +18,7 @@ public class ImageFragment extends Fragment {
     private MediaInfo mMediaInfo;
 
     private HackyViewPager viewPager;
-    private ImageView backgroundImage;
-    private PhotoViewAttacher photoViewAttacher;
+    private PhotoView photoView;
 
     public void setMediaInfo(MediaInfo mediaInfo) {
         mMediaInfo = mediaInfo;
@@ -32,13 +28,12 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
-        backgroundImage = (ImageView) rootView.findViewById(R.id.backgroundImage);
+        photoView = rootView.findViewById(R.id.photoView);
         viewPager = (HackyViewPager) getActivity().findViewById(R.id.viewPager);
 
         if (savedInstanceState != null) {
             boolean isLocked = savedInstanceState.getBoolean(Constants.IS_LOCKED, false);
             viewPager.setLocked(isLocked);
-            createViewAttacher(savedInstanceState);
         }
 
         loadImageToView();
@@ -48,18 +43,10 @@ public class ImageFragment extends Fragment {
 
     private void loadImageToView() {
         if (mMediaInfo != null) {
-            mMediaInfo.getLoader().loadMedia(getActivity(), backgroundImage, new MediaLoader.SuccessCallback() {
+            mMediaInfo.getLoader().loadMedia(getActivity(), photoView, new MediaLoader.SuccessCallback() {
                 @Override
-                public void onSuccess() {
-                    createViewAttacher(getArguments());
-                }
+                public void onSuccess() {}
             });
-        }
-    }
-
-    private void createViewAttacher(Bundle savedInstanceState) {
-        if (savedInstanceState.getBoolean(Constants.ZOOM)) {
-            photoViewAttacher = new PhotoViewAttacher(backgroundImage);
         }
     }
 
@@ -68,7 +55,6 @@ public class ImageFragment extends Fragment {
         if (isViewPagerActive()) {
             outState.putBoolean(Constants.IS_LOCKED, viewPager.isLocked());
         }
-        outState.putBoolean(Constants.ZOOM, photoViewAttacher != null);
         super.onSaveInstanceState(outState);
     }
 
@@ -77,6 +63,6 @@ public class ImageFragment extends Fragment {
     }
 
     private boolean isBackgroundImageActive() {
-        return backgroundImage != null && backgroundImage.getDrawable() != null;
+        return photoView != null && photoView.getDrawable() != null;
     }
 }
