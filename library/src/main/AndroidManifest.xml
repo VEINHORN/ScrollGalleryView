@@ -2,7 +2,7 @@
     package="com.veinhorn.scrollgalleryview">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <application android:allowBackup="true" android:label="@string/app_name">
+    <application android:allowBackup="true">
         <activity android:name="com.veinhorn.scrollgalleryview.VideoPlayerActivity" />
     </application>
 
