@@ -7,9 +7,10 @@ android {
         applicationId "com.veinhorn.scrollgalleryview"
         minSdkVersion 14
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.05"
+        versionCode 7
+        versionName "1.0.7"
     }
+
     buildTypes {
         release {
             minifyEnabled false
