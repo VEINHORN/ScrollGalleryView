@@ -58,6 +58,8 @@ public class ScrollGalleryView extends LinearLayout {
         }
     };
 
+    private ImageFragment.OnImageClickListener onImageClickListener;
+
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -74,6 +76,7 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
     }
 
+    // TODO: We should call setOnImageClickListener only before
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
@@ -82,6 +85,11 @@ public class ScrollGalleryView extends LinearLayout {
 
     public ViewPager getViewPager() {
         return viewPager;
+    }
+
+    public ScrollGalleryView addOnImageClickListener(ImageFragment.OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+        return this;
     }
 
     /**
@@ -208,7 +216,7 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager) findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, onImageClickListener);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }

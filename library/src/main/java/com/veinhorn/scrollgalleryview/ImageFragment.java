@@ -19,6 +19,15 @@ public class ImageFragment extends Fragment {
 
     private HackyViewPager viewPager;
     private PhotoView photoView;
+    private OnImageClickListener onImageClickListener;
+
+    public interface OnImageClickListener {
+        void onClick();
+    }
+
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+    }
 
     public void setMediaInfo(MediaInfo mediaInfo) {
         mMediaInfo = mediaInfo;
@@ -29,6 +38,14 @@ public class ImageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         photoView = rootView.findViewById(R.id.photoView);
+        if (onImageClickListener != null) {
+            photoView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onImageClickListener.onClick();
+                }
+            });
+        }
         viewPager = (HackyViewPager) getActivity().findViewById(R.id.viewPager);
 
         if (savedInstanceState != null) {

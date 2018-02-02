@@ -16,11 +16,14 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     private boolean isZoom = false;
 
+    private ImageFragment.OnImageClickListener onImageClickListener;
+
     public ScreenSlidePagerAdapter(FragmentManager fm, List<MediaInfo> listOfMedia,
-                                   boolean isZoom) {
+                                   boolean isZoom, ImageFragment.OnImageClickListener onImageClickListener) {
         super(fm);
         this.mListOfMedia = listOfMedia;
         this.isZoom = isZoom;
+        this.onImageClickListener = onImageClickListener;
     }
 
     @Override
@@ -36,6 +39,9 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     private Fragment loadImageFragment(MediaInfo mediaInfo) {
         ImageFragment fragment = new ImageFragment();
         fragment.setMediaInfo(mediaInfo);
+        if (onImageClickListener != null) {
+            fragment.setOnImageClickListener(onImageClickListener);
+        }
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constants.ZOOM, isZoom);
         fragment.setArguments(bundle);
