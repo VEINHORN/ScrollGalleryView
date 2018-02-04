@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 /**
- * Implementation may load image from some sources, such as remote url.
+ * MediaLoader is used for loading medias from different sources such as url, file system, etc.
  */
 public interface MediaLoader {
 
