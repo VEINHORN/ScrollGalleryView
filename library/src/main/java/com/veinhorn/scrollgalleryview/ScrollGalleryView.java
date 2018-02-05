@@ -37,7 +37,7 @@ public class ScrollGalleryView extends LinearLayout {
     // Options
     private int thumbnailSize; // width and height in pixels
     private boolean zoomEnabled;
-    private boolean thumbnailsHiddenEnabled;
+    private boolean isThumbnailsHidden;
 
     // Views
     private LinearLayout thumbnailsContainer;
@@ -181,10 +181,23 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
-    public ScrollGalleryView hideThumbnails(boolean thumbnailsHiddenEnabled) {
-        this.thumbnailsHiddenEnabled = thumbnailsHiddenEnabled;
-        horizontalScrollView.setVisibility(GONE);
+    public ScrollGalleryView withHiddenThumbnails(boolean isThumbnailsHidden) {
+        if (this.isThumbnailsHidden && !isThumbnailsHidden) {
+            showThumbnails();
+        } else if (!this.isThumbnailsHidden && isThumbnailsHidden) {
+            hideThumbnails();
+        }
+        this.isThumbnailsHidden = isThumbnailsHidden;
+
         return this;
+    }
+
+    public void showThumbnails() {
+        horizontalScrollView.setVisibility(VISIBLE);
+    }
+
+    public void hideThumbnails() {
+        horizontalScrollView.setVisibility(GONE);
     }
 
     private Bitmap getDefaultThumbnail() {
