@@ -19,13 +19,9 @@ public class ImageFragment extends Fragment {
 
     private HackyViewPager viewPager;
     private PhotoView photoView;
-    private OnImageClickListener onImageClickListener;
+    private ScrollGalleryView.OnImageClickListener onImageClickListener;
 
-    public interface OnImageClickListener {
-        void onClick();
-    }
-
-    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+    public void setOnImageClickListener(ScrollGalleryView.OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
     }
 

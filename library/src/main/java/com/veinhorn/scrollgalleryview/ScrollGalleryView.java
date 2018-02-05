@@ -58,7 +58,11 @@ public class ScrollGalleryView extends LinearLayout {
         }
     };
 
-    private ImageFragment.OnImageClickListener onImageClickListener;
+    private OnImageClickListener onImageClickListener;
+
+    public interface OnImageClickListener {
+        void onClick();
+    }
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -76,25 +80,34 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
     }
 
-    // TODO: We should call setOnImageClickListener only before
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
         return this;
     }
 
+    /**
+     *
+     * @return inner ViewPager
+     */
     public ViewPager getViewPager() {
         return viewPager;
     }
 
-    public ScrollGalleryView addOnImageClickListener(ImageFragment.OnImageClickListener onImageClickListener) {
+    /**
+     * Set up OnImageClickListener for your gallery images
+     * You should set OnImageClickListener only before setFragmentManager call!
+     * @param onImageClickListener which is called when you click on image
+     * @return ScrollGalleryView
+     */
+    public ScrollGalleryView addOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
         return this;
     }
 
     /**
      * Set up OnPageChangeListener for internal ViewPager
-     * @param listener
+     * @param listener which is used by internal ViewPager
      */
     public void addOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
         viewPager.clearOnPageChangeListeners();
