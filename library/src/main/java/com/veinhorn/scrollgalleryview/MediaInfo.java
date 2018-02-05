@@ -3,7 +3,7 @@ package com.veinhorn.scrollgalleryview;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 /**
- * Media Info contains the information required to load and display the media in the gallery.
+ * MediaInfo contains the information required to load and display the media in the gallery.
  */
 public class MediaInfo {
 
