@@ -38,6 +38,7 @@ public class ScrollGalleryView extends LinearLayout {
     private int thumbnailSize; // width and height in pixels
     private boolean zoomEnabled;
     private boolean isThumbnailsHidden;
+    private Boolean hideThumbnailsOnClick;
 
     // Views
     private LinearLayout thumbnailsContainer;
@@ -59,6 +60,23 @@ public class ScrollGalleryView extends LinearLayout {
     };
 
     private OnImageClickListener onImageClickListener;
+
+    private OnImageClickListener innerOnImageClickListener = new OnImageClickListener() {
+        @Override
+        public void onClick() {
+            if (hideThumbnailsOnClick) {
+                if (isThumbnailsHidden) {
+                    showThumbnails();
+                    isThumbnailsHidden = false;
+                }
+                else {
+                    hideThumbnails();
+                    isThumbnailsHidden = true;
+                }
+            }
+            if (onImageClickListener != null) onImageClickListener.onClick();
+        }
+    };
 
     public interface OnImageClickListener {
         void onClick();
@@ -192,6 +210,11 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    public ScrollGalleryView hideThumbnailsOnClick(boolean hideThumbnailsOnClick) {
+        this.hideThumbnailsOnClick = hideThumbnailsOnClick;
+        return this;
+    }
+
     public void showThumbnails() {
         horizontalScrollView.setVisibility(VISIBLE);
     }
@@ -242,7 +265,7 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager) findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, onImageClickListener);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
