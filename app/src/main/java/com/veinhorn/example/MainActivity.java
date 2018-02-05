@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.Wave;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         scrollGalleryView
                 .setThumbnailSize(200)
                 .setZoom(true)
+                .addOnImageClickListener(() -> {
+                    Toast.makeText(MainActivity.this, "You have clicked on image", Toast.LENGTH_SHORT).show();
+                })
                 .setFragmentManager(getSupportFragmentManager());
 
         Wave wave = new Wave();
