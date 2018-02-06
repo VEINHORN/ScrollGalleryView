@@ -25,6 +25,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:transition:26.1.0'
     compile 'com.github.chrisbanes:PhotoView:2.0.0'
 }
 

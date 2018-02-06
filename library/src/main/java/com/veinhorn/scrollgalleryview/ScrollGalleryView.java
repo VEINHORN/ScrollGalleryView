@@ -6,6 +6,8 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.os.Build;
+import android.support.transition.Transition;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -45,6 +47,10 @@ public class ScrollGalleryView extends LinearLayout {
     private HorizontalScrollView horizontalScrollView;
     private ViewPager viewPager;
 
+    // Transitions
+    private Transition thumbnailsTransition;
+    private boolean useDefaultThumbnailsTransition;
+
     // Listeners
     private final ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override public void onPageSelected(int position) {
@@ -68,8 +74,7 @@ public class ScrollGalleryView extends LinearLayout {
                 if (isThumbnailsHidden) {
                     showThumbnails();
                     isThumbnailsHidden = false;
-                }
-                else {
+                } else {
                     hideThumbnails();
                     isThumbnailsHidden = true;
                 }
@@ -199,6 +204,11 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    /**
+     * If you enabled this option, hideThumbnailsOnClick() method will not work
+     * @param isThumbnailsHidden hides thumbnails container
+     * @return ScrollGalleryView
+     */
     public ScrollGalleryView withHiddenThumbnails(boolean isThumbnailsHidden) {
         if (this.isThumbnailsHidden && !isThumbnailsHidden) {
             showThumbnails();
@@ -210,17 +220,52 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    /**
+     *
+     * Keep in mind that this method do not work with enabled isThumbnailsHidden option
+     * @param hideThumbnailsOnClick hides thumbnails container on image click
+     * @return ScrollGalleryView
+     */
     public ScrollGalleryView hideThumbnailsOnClick(boolean hideThumbnailsOnClick) {
-        this.hideThumbnailsOnClick = hideThumbnailsOnClick;
+        if (!isThumbnailsHidden) {
+            this.hideThumbnailsOnClick = hideThumbnailsOnClick;
+            if (hideThumbnailsOnClick) this.useDefaultThumbnailsTransition = true;
+        }
+        return this;
+    }
+
+    /**
+     *
+     * Keep in mind that this method do not work with enabled isThumbnailsHidden option
+     * @param hideThumbnailsOnClick hides thumbnails container on image click
+     * @param thumbnailsTransition null is used to disable transation
+     * @return ScrollGalleryView
+     */
+    public ScrollGalleryView hideThumbnailsOnClick(boolean hideThumbnailsOnClick, Transition thumbnailsTransition) {
+        if (!isThumbnailsHidden) {
+            this.hideThumbnailsOnClick = hideThumbnailsOnClick;
+            this.thumbnailsTransition = thumbnailsTransition;
+        }
         return this;
     }
 
     public void showThumbnails() {
+        setThumbnailsTransition();
         horizontalScrollView.setVisibility(VISIBLE);
     }
 
     public void hideThumbnails() {
+        setThumbnailsTransition();
         horizontalScrollView.setVisibility(GONE);
+    }
+
+    // Make choice between default and provided by user transition
+    private void setThumbnailsTransition() {
+        if (thumbnailsTransition == null && useDefaultThumbnailsTransition) {
+            TransitionManager.beginDelayedTransition(horizontalScrollView);
+        } else if (thumbnailsTransition != null) {
+            TransitionManager.beginDelayedTransition(horizontalScrollView, thumbnailsTransition);
+        }
     }
 
     private Bitmap getDefaultThumbnail() {
