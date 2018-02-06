@@ -40,7 +40,8 @@ public class ScrollGalleryView extends LinearLayout {
     private int thumbnailSize; // width and height in pixels
     private boolean zoomEnabled;
     private boolean isThumbnailsHidden;
-    private Boolean hideThumbnailsOnClick;
+    private boolean hideThumbnailsOnClick;
+    private Integer hideThumbnailsAfterDelay;
 
     // Views
     private LinearLayout thumbnailsContainer;
@@ -106,6 +107,9 @@ public class ScrollGalleryView extends LinearLayout {
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
+
+        if (hideThumbnailsAfterDelay != null) hideThumbnailsAfterDelay(hideThumbnailsAfterDelay);
+
         return this;
     }
 
@@ -249,14 +253,38 @@ public class ScrollGalleryView extends LinearLayout {
         return this;
     }
 
+    /**
+     * Automatically hide thumbnails container after specified delay
+     * @param hideThumbnailsAfterDelay delay in ms
+     * @return ScrollGalleryView
+     */
+    public ScrollGalleryView hideThumbnailsAfter(int hideThumbnailsAfterDelay) {
+        if (!isThumbnailsHidden) {
+            this.hideThumbnailsAfterDelay = hideThumbnailsAfterDelay;
+        }
+        return this;
+    }
+
     public void showThumbnails() {
         setThumbnailsTransition();
         horizontalScrollView.setVisibility(VISIBLE);
+        // Hide thumbnails container when hideThumbnailsAfterDelay option is enabled
+        if (hideThumbnailsAfterDelay != null) hideThumbnailsAfterDelay(hideThumbnailsAfterDelay);
     }
 
     public void hideThumbnails() {
         setThumbnailsTransition();
         horizontalScrollView.setVisibility(GONE);
+    }
+
+    private void hideThumbnailsAfterDelay(int delay) {
+        horizontalScrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideThumbnails();
+                isThumbnailsHidden = !isThumbnailsHidden;
+            }
+        }, delay);
     }
 
     // Make choice between default and provided by user transition
