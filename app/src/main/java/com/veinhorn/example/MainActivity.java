@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.style.Wave;
@@ -41,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         scrollGalleryView
                 .setThumbnailSize(200)
                 .setZoom(true)
+                .withHiddenThumbnails(false)
+                .hideThumbnailsOnClick(true)
+                .hideThumbnailsAfter(5000)
                 .addOnImageClickListener(() -> {
-                    Toast.makeText(MainActivity.this, "You have clicked on image", Toast.LENGTH_SHORT).show();
+                    Log.i(getClass().getName(), "You have clicked on image");
                 })
                 .setFragmentManager(getSupportFragmentManager());
 
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             List<String> images = new ArrayList<>();
             int counter = 0;
             for (Element imageElm : imageElms) {
-                images.add(imageElm.attr("src").replace("small-previews", "large-previews"));
+                images.add(imageElm.attr("src")); // .replace("small-previews", "large-previews"));
                 if (++counter == size) break;
             }
             return images;
