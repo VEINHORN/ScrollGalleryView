@@ -107,7 +107,7 @@ Library is also contains default image loader but it's not optimized for perform
 
 ### Configuration
 
-You can specify a bunch of settings during gallery initialization.
+You can specify a bunch of additional settings during gallery initialization.
 
 |Option|Method|Description|
 |------|------|-----------|
