@@ -277,6 +277,19 @@ public class ScrollGalleryView extends LinearLayout {
         horizontalScrollView.setVisibility(GONE);
     }
 
+    /**
+     * Remove all images from gallery
+     */
+    public void clearGallery() {
+        // remove all media infos
+        mListOfMedia.clear();
+        // create new adapter
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
+        viewPager.setAdapter(pagerAdapter);
+        // remove thumbnails
+        thumbnailsContainer.removeAllViews();
+    }
+
     private void hideThumbnailsAfterDelay(int delay) {
         horizontalScrollView.postDelayed(new Runnable() {
             @Override
