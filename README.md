@@ -20,7 +20,7 @@ ScrollGalleryView is a flexible library which helps you to create awesome media 
 Add to your application `build.gradle`:
 
 ```gradle
-compile 'com.veinhorn.scrollgalleryview:library:1.0.7'
+compile 'com.veinhorn.scrollgalleryview:library:1.0.8'
 ```
 
 ## Usage
