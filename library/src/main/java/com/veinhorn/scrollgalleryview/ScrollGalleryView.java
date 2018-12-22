@@ -9,7 +9,6 @@ import android.os.Build;
 import android.support.transition.Transition;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -19,7 +18,6 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class ScrollGalleryView extends LinearLayout {
     private FragmentManager fragmentManager;
     private Context context;
     private Point displayProps;
-    private PagerAdapter pagerAdapter;
+    private ScreenSlidePagerAdapter pagerAdapter;
     private List<MediaInfo> mListOfMedia;
 
     // Options
@@ -290,6 +288,19 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailsContainer.removeAllViews();
     }
 
+    /**
+     * Remove a media from the gallery
+     *
+     * @param position media's position to remove
+     */
+    public void removeMedia(int position) {
+        if (position >= mListOfMedia.size() || position < 0) {
+            return;
+        }
+        pagerAdapter.removeItem(position);
+        removeThumbnail(position);
+    }
+
     private void hideThumbnailsAfterDelay(int delay) {
         horizontalScrollView.postDelayed(new Runnable() {
             @Override
@@ -323,6 +334,14 @@ public class ScrollGalleryView extends LinearLayout {
             point.set(display.getWidth(), display.getHeight());
         }
         return point;
+    }
+
+    private void removeThumbnail(int position) {
+        View thumbnail = thumbnailsContainer.getChildAt(position);
+        if (thumbnail == null) {
+            return;
+        }
+        thumbnailsContainer.removeView(thumbnail);
     }
 
     private ImageView addThumbnail(Bitmap image) {
