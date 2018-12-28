@@ -18,7 +18,7 @@ public class GlideImageLoader implements MediaLoader {
     private String url;
     private int width;
     private int height;
-    RequestOptions requestOptions;
+    private RequestOptions requestOptions;
 
     public GlideImageLoader(String url) {
         this.url = url;
@@ -61,7 +61,7 @@ public class GlideImageLoader implements MediaLoader {
 
     @Override
     public void loadThumbnail(Context context, ImageView thumbnailView, final SuccessCallback callback) {
-        Glide.with(context).load(url).listener(new RequestListener<Drawable>() {
+        Glide.with(context).applyDefaultRequestOptions(requestOptions).load(url).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
