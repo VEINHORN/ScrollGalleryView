@@ -17,7 +17,18 @@ ScrollGalleryView is a flexible library which helps you to create awesome media 
 
 ## Installing
 
-Add to your application `build.gradle`:
+Add [JitPack](https://jitpack.io) repository to your root `build.gradle` (see more details [here](https://github.com/VEINHORN/ScrollGalleryView/issues/71)):
+
+```gradle
+allprojects {
+    repositories {
+        // ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+Add dependency to your module `build.gradle`:
 
 ```gradle
 compile 'com.veinhorn.scrollgalleryview:library:1.0.8'
