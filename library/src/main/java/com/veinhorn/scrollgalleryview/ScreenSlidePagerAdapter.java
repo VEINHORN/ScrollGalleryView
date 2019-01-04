@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 
 import java.util.List;
 
@@ -48,8 +49,18 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         return fragment;
     }
 
+    public void removeItem(int position) {
+        mListOfMedia.remove(position);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return mListOfMedia.size();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return PagerAdapter.POSITION_NONE;
     }
 }
