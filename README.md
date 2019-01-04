@@ -31,7 +31,7 @@ allprojects {
 Add dependency to your module `build.gradle`:
 
 ```gradle
-compile 'com.veinhorn.scrollgalleryview:library:1.0.8'
+implementation 'com.veinhorn.scrollgalleryview:library:1.1.0'
 ```
 
 ## Usage
