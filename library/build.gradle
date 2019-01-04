@@ -7,7 +7,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 8
-        versionName "1.0.8"
+        versionName "1.1.0"
     }
 
     buildTypes {
@@ -42,7 +42,7 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.0.8'
+    libraryVersion = '1.1.0'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
