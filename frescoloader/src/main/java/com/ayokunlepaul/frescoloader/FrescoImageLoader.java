@@ -17,7 +17,7 @@ import com.facebook.imagepipeline.image.CloseableBitmap;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.ayokunlepaul.scrollgalleryview.loader.MediaLoader;
+import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 /**
  * Created by ayokunlepaul on 05/01/2019.
@@ -44,7 +44,7 @@ public class FrescoImageLoader implements MediaLoader {
     }
 
     @Override
-    public void loadMedia(Context context, final ImageView imageView, SuccessCallback callback) {
+    public void loadMedia(Context context, final ImageView imageView, MediaLoader.SuccessCallback callback) {
         if (!Fresco.hasBeenInitialized()) {
             Fresco.initialize(context);
         }
