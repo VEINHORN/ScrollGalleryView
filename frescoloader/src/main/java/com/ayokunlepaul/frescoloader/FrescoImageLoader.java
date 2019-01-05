@@ -44,7 +44,7 @@ public class FrescoImageLoader implements MediaLoader {
     }
 
     @Override
-    public void loadMedia(Context context, final ImageView imageView, MediaLoader.SuccessCallback callback) {
+    public void loadMedia(Context context, final ImageView imageView, SuccessCallback callback) {
         if (!Fresco.hasBeenInitialized()) {
             Fresco.initialize(context);
         }
