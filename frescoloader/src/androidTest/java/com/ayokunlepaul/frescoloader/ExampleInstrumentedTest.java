@@ -1,4 +1,4 @@
-package com.ayokunlepaul.scrollgalleryview.loader.fresco;
+package com.ayokunlepaul.frescoloader;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.veinhorn.scrollgalleryview.loader.fresco.test", appContext.getPackageName());
+        assertEquals("com.ayokunlepaul.frescoloader.test", appContext.getPackageName());
     }
 }

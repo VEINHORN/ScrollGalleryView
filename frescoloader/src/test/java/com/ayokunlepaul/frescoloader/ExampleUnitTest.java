@@ -1,4 +1,4 @@
-package com.ayokunlepaul.scrollgalleryview.loader.fresco;
+package com.ayokunlepaul.frescoloader;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.ayokunlepaul.scrollgalleryview.loader.fresco;
+package com.ayokunlepaul.frescoloader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
