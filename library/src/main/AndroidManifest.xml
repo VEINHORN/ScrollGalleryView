@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.veinhorn.scrollgalleryview">
+    package="com.ayokunlepaul.scrollgalleryview">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application android:allowBackup="true">
-        <activity android:name="com.veinhorn.scrollgalleryview.VideoPlayerActivity" />
+        <activity android:name="com.ayokunlepaul.scrollgalleryview.VideoPlayerActivity" />
     </application>
 
 </manifest>
