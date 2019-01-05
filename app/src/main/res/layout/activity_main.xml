@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <com.ayokunlepaul.scrollgalleryview.ScrollGalleryView
+    <com.veinhorn.scrollgalleryview.ScrollGalleryView
         android:id="@+id/scroll_gallery_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
