@@ -34,6 +34,28 @@ Add dependency to your module `build.gradle`:
 implementation 'com.veinhorn.scrollgalleryview:library:1.1.0'
 ```
 
+### MediaLoaders
+
+There are several MediaLoaders implementations for most popular caching libraries: Picasso, Glide, Fresco.
+
+#### Picasso
+
+```gradle
+compile 'com.veinhorn.scrollgalleryview:picasso-loader:1.0.0'
+```
+
+#### Glide
+
+```gradle
+compile 'com.veinhorn.scrollgalleryview:glide-loader:1.0.0'
+```
+
+#### Fresco
+
+```gradle
+compile 'com.veinhorn.scrollgalleryview:fresco-loader:1.0.0'
+```
+
 ## Usage
 
 Add to your layout:
