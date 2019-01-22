@@ -18,6 +18,9 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.veinhorn.scrollgalleryview.builder.GalleryBuilder;
+import com.veinhorn.scrollgalleryview.builder.GalleryBuilderImpl;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 import java.util.ArrayList;
@@ -299,6 +302,10 @@ public class ScrollGalleryView extends LinearLayout {
         }
         pagerAdapter.removeItem(position);
         removeThumbnail(position);
+    }
+
+    public static GalleryBuilder from(ScrollGalleryView galleryView) {
+        return new GalleryBuilderImpl(galleryView);
     }
 
     private void hideThumbnailsAfterDelay(int delay) {
