@@ -23,10 +23,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:transition:27.1.1'
-    compile 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:transition:27.1.1'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
 }
 
 ext {

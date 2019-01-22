@@ -25,12 +25,12 @@ android {
 }
 
 dependencies {
-    compile project(':library')
-    compile project(':picasso-loader')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'org.jsoup:jsoup:1.11.2'
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation project(':library')
+    implementation project(':picasso-loader')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
 }
