@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.2.1"
+        versionCode 9
+        versionName "1.2.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -45,7 +45,7 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.2.1'
+    libraryVersion = '1.2.3'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
