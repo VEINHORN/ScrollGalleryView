@@ -19,9 +19,16 @@ public interface MediaHelper {
     /**
      * Creates a list of MediaInfos from the list of image urls
      * @param urls is a list of image urls
-     * @return MediaInfo object
+     * @return a list of MediaInfo objects
      */
     List<MediaInfo> images(List<String> urls);
+
+    /**
+     * Creates a list of MediaInfos from the array of image urls
+     * @param urls is an array of image urls
+     * @return a list of MediaInfo objects
+     */
+    List<MediaInfo> images(String... urls);
 
     /**
      * Creates MediaInfo object based on image url
