@@ -2,6 +2,8 @@ package com.veinhorn.scrollgalleryview.builder;
 
 import com.veinhorn.scrollgalleryview.MediaInfo;
 
+import java.util.List;
+
 /**
  * MediaHelper is a specification which is used for building DSLs. It includes a bunch of methods
  * which help to simplify adding media to your gallery
@@ -13,6 +15,13 @@ public interface MediaHelper {
      * @return MediaInfo object
      */
     MediaInfo image(String url);
+
+    /**
+     * Creates a list of MediaInfos from the list of image urls
+     * @param urls is a list of image urls
+     * @return MediaInfo object
+     */
+    List<MediaInfo> images(List<String> urls);
 
     /**
      * Creates MediaInfo object based on image url

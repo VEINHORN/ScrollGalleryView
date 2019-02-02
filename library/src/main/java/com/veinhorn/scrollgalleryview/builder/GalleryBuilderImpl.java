@@ -24,8 +24,14 @@ public class GalleryBuilderImpl implements GalleryBuilder {
     }
 
     @Override
-    public GalleryBuilder add(MediaInfo mediaInfo) {
-        medias.add(mediaInfo);
+    public GalleryBuilder add(MediaInfo media) {
+        this.medias.add(media);
+        return this;
+    }
+
+    @Override
+    public GalleryBuilder add(List<MediaInfo> medias) {
+        this.medias.addAll(medias);
         return this;
     }
 
