@@ -31,7 +31,7 @@ allprojects {
 Add dependency to your module `build.gradle`:
 
 ```gradle
-implementation 'com.veinhorn.scrollgalleryview:library:1.2.5'
+implementation 'com.veinhorn.scrollgalleryview:library:1.2.6'
 ```
 
 ### MediaLoaders
