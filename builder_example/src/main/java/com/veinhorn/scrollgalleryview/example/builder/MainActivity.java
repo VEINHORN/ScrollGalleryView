@@ -2,6 +2,8 @@ package com.veinhorn.scrollgalleryview.example.builder;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
 import com.veinhorn.scrollgalleryview.builder.GallerySettings;
 
@@ -24,6 +26,18 @@ public class MainActivity extends FragmentActivity {
                                 .enableZoom(true)
                                 .build()
                 )
+                .onImageClickListener(new ScrollGalleryView.OnImageClickListener() {
+                    @Override
+                    public void onClick(int position) {
+                        Toast.makeText(MainActivity.this, "image position = " + position, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .onImageLongClickListener(new ScrollGalleryView.OnImageLongClickListener() {
+                    @Override
+                    public void onClick(int position) {
+                        Toast.makeText(MainActivity.this, "image position = " + position, Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .add(images(
                         "http://pirate-islands.com/wp-content/uploads/2018/07/07_Dom-Fernando-II_01-636x310.jpg",
                         "http://povodu.ru/wp-content/uploads/2016/04/pochemu-korabl-derzitsa-na-vode.jpg"
