@@ -68,7 +68,13 @@ public class ScrollGalleryView extends LinearLayout {
     };
 
     private OnImageClickListener onImageClickListener;
+    private OnImageLongClickListener onImageLongClickListener;
 
+    /**
+     * We should create OnImageClickListener to wrap our provided OnImageClickListener,
+     * otherwise it will be null when we pass it to PagerAdapter. Also it used to wrap
+     * code which is responsible for showing/hiding thumbnails when user click on image
+     */
     private OnImageClickListener innerOnImageClickListener = new OnImageClickListener() {
         @Override
         public void onClick() {
@@ -85,7 +91,18 @@ public class ScrollGalleryView extends LinearLayout {
         }
     };
 
+    private OnImageLongClickListener innerOnImageLongClickListener = new OnImageLongClickListener() {
+        @Override
+        public void onClick() {
+            if (onImageLongClickListener != null) onImageLongClickListener.onClick();
+        }
+    };
+
     public interface OnImageClickListener {
+        void onClick();
+    }
+
+    public interface OnImageLongClickListener {
         void onClick();
     }
 
@@ -130,6 +147,11 @@ public class ScrollGalleryView extends LinearLayout {
      */
     public ScrollGalleryView addOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
+        return this;
+    }
+
+    public ScrollGalleryView addOnImageLongClickListener(OnImageLongClickListener onImageLongClickListener) {
+        this.onImageLongClickListener = onImageLongClickListener;
         return this;
     }
 
@@ -284,8 +306,15 @@ public class ScrollGalleryView extends LinearLayout {
     public void clearGallery() {
         // remove all media infos
         mListOfMedia.clear();
-        // create new adapter
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
+
+        pagerAdapter = new ScreenSlidePagerAdapter(
+                fragmentManager,
+                mListOfMedia,
+                zoomEnabled,
+                innerOnImageClickListener,
+                innerOnImageLongClickListener
+        );
+
         viewPager.setAdapter(pagerAdapter);
         // remove thumbnails
         thumbnailsContainer.removeAllViews();
@@ -377,7 +406,15 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager) findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
+
+        pagerAdapter = new ScreenSlidePagerAdapter(
+                fragmentManager,
+                mListOfMedia,
+                zoomEnabled,
+                innerOnImageClickListener,
+                innerOnImageLongClickListener
+        );
+
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }

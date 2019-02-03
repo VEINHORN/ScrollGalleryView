@@ -19,10 +19,16 @@ public class ImageFragment extends Fragment {
 
     private HackyViewPager viewPager;
     private PhotoView photoView;
+
     private ScrollGalleryView.OnImageClickListener onImageClickListener;
+    private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
 
     public void setOnImageClickListener(ScrollGalleryView.OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
+    }
+
+    public void setOnImageLongClickListener(ScrollGalleryView.OnImageLongClickListener onImageLongClickListener) {
+        this.onImageLongClickListener = onImageLongClickListener;
     }
 
     public void setMediaInfo(MediaInfo mediaInfo) {
@@ -34,6 +40,7 @@ public class ImageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         photoView = rootView.findViewById(R.id.photoView);
+
         if (onImageClickListener != null) {
             photoView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -42,6 +49,16 @@ public class ImageFragment extends Fragment {
                 }
             });
         }
+        if (onImageLongClickListener != null) {
+            photoView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onImageLongClickListener.onClick();
+                    return false;
+                }
+            });
+        }
+
         viewPager = (HackyViewPager) getActivity().findViewById(R.id.viewPager);
 
         if (savedInstanceState != null) {
