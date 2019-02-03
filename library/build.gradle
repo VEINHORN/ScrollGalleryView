@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 11
-        versionName "1.2.4"
+        versionCode 12
+        versionName "1.2.5"
     }
 
     buildTypes {
@@ -42,7 +42,7 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.2.4'
+    libraryVersion = '1.2.5'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
