@@ -16,6 +16,10 @@ public interface GalleryBuilder {
      */
     GalleryBuilder settings(GallerySettings settings);
 
+    GalleryBuilder onImageClickListener(ScrollGalleryView.OnImageClickListener listener);
+
+    GalleryBuilder onImageLongClickListener(ScrollGalleryView.OnImageLongClickListener listener);
+
     /**
      * Adds single MediaInfo to gallery
      * @param media is a single MediaInfo object

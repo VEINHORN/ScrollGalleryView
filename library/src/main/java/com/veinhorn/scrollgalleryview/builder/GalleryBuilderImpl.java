@@ -10,6 +10,9 @@ public class GalleryBuilderImpl implements GalleryBuilder {
     private ScrollGalleryView galleryView;
     private GallerySettings settings;
 
+    private ScrollGalleryView.OnImageClickListener onImageClickListener;
+    private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
+
     private List<MediaInfo> medias;
 
     public GalleryBuilderImpl(ScrollGalleryView galleryView) {
@@ -20,6 +23,18 @@ public class GalleryBuilderImpl implements GalleryBuilder {
     @Override
     public GalleryBuilder settings(GallerySettings settings) {
         this.settings = settings;
+        return this;
+    }
+
+    @Override
+    public GalleryBuilder onImageClickListener(ScrollGalleryView.OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+        return this;
+    }
+
+    @Override
+    public GalleryBuilder onImageLongClickListener(ScrollGalleryView.OnImageLongClickListener onImageLongClickListener) {
+        this.onImageLongClickListener = onImageLongClickListener;
         return this;
     }
 
@@ -39,11 +54,11 @@ public class GalleryBuilderImpl implements GalleryBuilder {
     public ScrollGalleryView build() {
         // check here all parameters
 
-
-        // set options
         return galleryView
                 .setThumbnailSize(settings.getThumbnailSize())
                 .setZoom(settings.isZoomEnabled())
+                .addOnImageClickListener(onImageClickListener)
+                .addOnImageLongClickListener(onImageLongClickListener)
                 .setFragmentManager(settings.getFragmentManager())
                 .addMedia(medias);
     }
