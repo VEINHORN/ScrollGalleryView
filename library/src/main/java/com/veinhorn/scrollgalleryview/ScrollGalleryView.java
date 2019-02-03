@@ -77,7 +77,7 @@ public class ScrollGalleryView extends LinearLayout {
      */
     private OnImageClickListener innerOnImageClickListener = new OnImageClickListener() {
         @Override
-        public void onClick() {
+        public void onClick(int position) {
             if (hideThumbnailsOnClick) {
                 if (isThumbnailsHidden) {
                     showThumbnails();
@@ -87,23 +87,23 @@ public class ScrollGalleryView extends LinearLayout {
                     isThumbnailsHidden = true;
                 }
             }
-            if (onImageClickListener != null) onImageClickListener.onClick();
+            if (onImageClickListener != null) onImageClickListener.onClick(position);
         }
     };
 
     private OnImageLongClickListener innerOnImageLongClickListener = new OnImageLongClickListener() {
         @Override
-        public void onClick() {
-            if (onImageLongClickListener != null) onImageLongClickListener.onClick();
+        public void onClick(int position) {
+            if (onImageLongClickListener != null) onImageLongClickListener.onClick(position);
         }
     };
 
     public interface OnImageClickListener {
-        void onClick();
+        void onClick(int position);
     }
 
     public interface OnImageLongClickListener {
-        void onClick();
+        void onClick(int position);
     }
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {

@@ -37,12 +37,12 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         if (position < mListOfMedia.size()) {
             MediaInfo mediaInfo = mListOfMedia.get(position);
-            fragment = loadImageFragment(mediaInfo);
+            fragment = loadImageFragment(mediaInfo, position);
         }
         return fragment;
     }
 
-    private Fragment loadImageFragment(MediaInfo mediaInfo) {
+    private Fragment loadImageFragment(MediaInfo mediaInfo, int position) {
         ImageFragment fragment = new ImageFragment();
         fragment.setRetainInstance(true);
         fragment.setMediaInfo(mediaInfo);
@@ -56,6 +56,8 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         Bundle bundle = new Bundle();
         bundle.putBoolean(Constants.ZOOM, isZoom);
+        bundle.putInt("position", position);
+
         fragment.setArguments(bundle);
         return fragment;
     }
