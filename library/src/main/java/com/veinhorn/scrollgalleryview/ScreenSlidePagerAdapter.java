@@ -39,6 +39,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     private Fragment loadImageFragment(MediaInfo mediaInfo) {
         ImageFragment fragment = new ImageFragment();
+        fragment.setRetainInstance(true);
         fragment.setMediaInfo(mediaInfo);
         if (onImageClickListener != null) {
             fragment.setOnImageClickListener(onImageClickListener);
