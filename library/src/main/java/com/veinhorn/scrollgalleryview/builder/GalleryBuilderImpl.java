@@ -66,6 +66,7 @@ public class GalleryBuilderImpl implements GalleryBuilder {
         return galleryView
                 .setThumbnailSize(settings.getThumbnailSize())
                 .setZoom(settings.isZoomEnabled())
+                .enableAutoSelection(settings.isAutoSelectionEnabled())
                 .addOnImageClickListener(onImageClickListener)
                 .addOnImageLongClickListener(onImageLongClickListener)
                 .setFragmentManager(settings.getFragmentManager())

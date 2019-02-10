@@ -22,6 +22,12 @@ public class GallerySettingsBuilderImpl implements GallerySettingsBuilder {
     }
 
     @Override
+    public GallerySettingsBuilder enableAutoSelection(boolean isAutoSelectionEnabled) {
+        gallerySettings.setAutoSelectionEnabled(isAutoSelectionEnabled);
+        return this;
+    }
+
+    @Override
     public GallerySettingsBuilder withFragmentManager(FragmentManager fragmentManager) {
         gallerySettings.setFragmentManager(fragmentManager);
         return this;

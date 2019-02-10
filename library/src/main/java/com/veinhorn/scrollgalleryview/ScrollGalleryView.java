@@ -48,6 +48,7 @@ public class ScrollGalleryView extends LinearLayout {
     private boolean isThumbnailsHidden;
     private boolean hideThumbnailsOnClick;
     private Integer hideThumbnailsAfterDelay;
+    private boolean isAutoSelectionEnabled;
 
     // Views
     private LinearLayout thumbnailsContainer;
@@ -73,9 +74,13 @@ public class ScrollGalleryView extends LinearLayout {
         }
     };
 
+    /**
+     * Here we should remove and add OnScrollChangeListener to handle click events properly
+     */
     private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override public void onClick(View v) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Remove listener
+            if (isAutoSelectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 horizontalScrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
                     @Override
                     public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -91,7 +96,8 @@ public class ScrollGalleryView extends LinearLayout {
 
             viewPager.setCurrentItem(v.getId(), true);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Add listener again
+            if (isAutoSelectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 horizontalScrollView.setOnScrollChangeListener(new CustomOnScrollChangeListener());
             }
         }
@@ -208,39 +214,15 @@ public class ScrollGalleryView extends LinearLayout {
      */
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
+
         initializeViewPager();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android 6.0 - API 23
-            horizontalScrollView.setOnScrollChangeListener(new CustomOnScrollChangeListener()/*new OnScrollChangeListener() {
-                @Override
-                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                    // Get view count from inner container
-                    int childCount = thumbnailsContainer.getChildCount();
-
-                    DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
-                    int width = displayMetrics.widthPixels;
-
-                    for (int i = 0; i < thumbnailsContainer.getChildCount(); i++) {
-                        Rect rect = new Rect();
-                        thumbnailsContainer.getChildAt(i).getGlobalVisibleRect(rect);
-
-                        if (rect.left > width / 2 && width / 2 < rect.right && viewPager.getCurrentItem() != i) {
-
-                            // Here we should remove and than add again view pager listeners
-
-                            // TODO: Here we should think how to restore user defined OnPageChangeListener
-                            viewPager.clearOnPageChangeListeners();
-                            viewPager.setCurrentItem(i, false);
-                            viewPager.addOnPageChangeListener(viewPagerChangeListener);
-
-                            break;
-                        }
-                    }
-
-                    Log.i("some tag", "ttt");
-                }
-            }*/);
+        /*
+           Here we set up OnScrollChangeListener which is used for auto image selection in
+           ViewPager. This feature is only supported on Android 23 and higher
+         */
+        if (isAutoSelectionEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            horizontalScrollView.setOnScrollChangeListener(new CustomOnScrollChangeListener());
         }
 
         if (hideThumbnailsAfterDelay != null) hideThumbnailsAfterDelay(hideThumbnailsAfterDelay);
@@ -459,6 +441,11 @@ public class ScrollGalleryView extends LinearLayout {
         }
         pagerAdapter.removeItem(position);
         removeThumbnail(position);
+    }
+
+    public ScrollGalleryView enableAutoSelection(boolean isAutoSelectionEnabled) {
+        this.isAutoSelectionEnabled = isAutoSelectionEnabled;
+        return this;
     }
 
     public static GalleryBuilder from(ScrollGalleryView galleryView) {

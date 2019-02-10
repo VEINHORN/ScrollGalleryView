@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 public class GallerySettings {
     private int thumbnailSize;
     private boolean isZoomEnabled;
+    private boolean isAutoSelectionEnabled;
     private FragmentManager fragmentManager;
 
     public int getThumbnailSize() {
@@ -21,6 +22,14 @@ public class GallerySettings {
 
     public void setZoomEnabled(boolean zoomEnabled) {
         isZoomEnabled = zoomEnabled;
+    }
+
+    public void setAutoSelectionEnabled(boolean autoSelectionEnabled) {
+        isAutoSelectionEnabled = autoSelectionEnabled;
+    }
+
+    public boolean isAutoSelectionEnabled() {
+        return isAutoSelectionEnabled;
     }
 
     public FragmentManager getFragmentManager() {
