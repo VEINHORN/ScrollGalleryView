@@ -148,6 +148,12 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
     }
 
+    /**
+     *
+     * Also here we initialize ViewPager and add HorizontalView listeners
+     * @param fragmentManager
+     * @return ScrollGalleryView object
+     */
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
@@ -455,6 +461,10 @@ public class ScrollGalleryView extends LinearLayout {
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
 
+    /**
+     * Based on thumbnail view we calculate new position for scrolling HorizontalScrollView
+     * @param thumbnail view which is used for getting location on screen
+     */
     private void scroll(View thumbnail) {
         int thumbnailCoords[] = new int[2];
         thumbnail.getLocationOnScreen(thumbnailCoords);
