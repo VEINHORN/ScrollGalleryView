@@ -31,7 +31,7 @@ allprojects {
 Add dependency to your module `build.gradle`:
 
 ```gradle
-implementation 'com.veinhorn.scrollgalleryview:library:1.2.6'
+implementation 'com.veinhorn.scrollgalleryview:library:1.2.7'
 ```
 
 ### MediaLoaders
@@ -41,7 +41,7 @@ There are several MediaLoaders implementations for most popular caching librarie
 #### Picasso
 
 ```gradle
-implementation 'com.veinhorn.scrollgalleryview:picasso-loader:1.2.4'
+implementation 'com.veinhorn.scrollgalleryview:picasso-loader:1.2.7'
 ```
 
 #### Glide
