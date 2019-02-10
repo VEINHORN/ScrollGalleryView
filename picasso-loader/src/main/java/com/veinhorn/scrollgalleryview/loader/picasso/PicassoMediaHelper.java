@@ -10,7 +10,12 @@ import java.util.List;
 public class PicassoMediaHelper extends BasicMediaHelper {
     @Override
     public MediaInfo image(String url) {
-        return mediaInfo(url);
+        return mediaInfo(url, null);
+    }
+
+    @Override
+    public MediaInfo image(String url, String description) {
+        return mediaInfo(url, description);
     }
 
     @Override
@@ -18,7 +23,7 @@ public class PicassoMediaHelper extends BasicMediaHelper {
         List<MediaInfo> medias = new ArrayList<>();
 
         for (String url : urls) {
-            medias.add(mediaInfo(url));
+            medias.add(mediaInfo(url, null));
         }
 
         return medias;
@@ -29,7 +34,11 @@ public class PicassoMediaHelper extends BasicMediaHelper {
         return images(Arrays.asList(urls));
     }
 
-    private MediaInfo mediaInfo(String url) {
+    // TODO: Add null checking for image url
+    private MediaInfo mediaInfo(String url, String description) {
+        if (description != null) {
+            return MediaInfo.mediaLoader(new PicassoImageLoader(url), description);
+        }
         return MediaInfo.mediaLoader(new PicassoImageLoader(url));
     }
 }
