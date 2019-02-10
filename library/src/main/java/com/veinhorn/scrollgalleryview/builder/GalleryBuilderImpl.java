@@ -1,5 +1,7 @@
 package com.veinhorn.scrollgalleryview.builder;
 
+import android.support.v4.view.ViewPager;
+
 import com.veinhorn.scrollgalleryview.MediaInfo;
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
 
@@ -12,6 +14,7 @@ public class GalleryBuilderImpl implements GalleryBuilder {
 
     private ScrollGalleryView.OnImageClickListener onImageClickListener;
     private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
+    private ViewPager.OnPageChangeListener onPageChangeListener;
 
     private List<MediaInfo> medias;
 
@@ -39,6 +42,12 @@ public class GalleryBuilderImpl implements GalleryBuilder {
     }
 
     @Override
+    public GalleryBuilder onPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener) {
+        this.onPageChangeListener = onPageChangeListener;
+        return this;
+    }
+
+    @Override
     public GalleryBuilder add(MediaInfo media) {
         this.medias.add(media);
         return this;
@@ -60,6 +69,7 @@ public class GalleryBuilderImpl implements GalleryBuilder {
                 .addOnImageClickListener(onImageClickListener)
                 .addOnImageLongClickListener(onImageLongClickListener)
                 .setFragmentManager(settings.getFragmentManager())
+                .addOnPageChangeListener(onPageChangeListener)
                 .addMedia(medias);
     }
 }

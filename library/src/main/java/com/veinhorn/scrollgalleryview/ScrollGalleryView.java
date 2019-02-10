@@ -179,11 +179,13 @@ public class ScrollGalleryView extends LinearLayout {
     }
 
     /**
-     * Set up OnPageChangeListener for internal ViewPager
-     * @param listener which is used by internal ViewPager
+     * Add OnPageChangeListener for internal ViewPager
+     * @param listener is an OnPageChange listener which is used by internal ViewPager
+     * @return ScrollGalleryView object
      */
-    public void addOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
+    public ScrollGalleryView addOnPageChangeListener(final ViewPager.OnPageChangeListener listener) {
         viewPager.clearOnPageChangeListeners();
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -198,6 +200,8 @@ public class ScrollGalleryView extends LinearLayout {
                 listener.onPageScrollStateChanged(state);
             }
         });
+
+        return this;
     }
 
     public ScrollGalleryView addMedia(MediaInfo mediaInfo) {

@@ -1,5 +1,7 @@
 package com.veinhorn.scrollgalleryview.builder;
 
+import android.support.v4.view.ViewPager;
+
 import com.veinhorn.scrollgalleryview.MediaInfo;
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
 
@@ -19,6 +21,8 @@ public interface GalleryBuilder {
     GalleryBuilder onImageClickListener(ScrollGalleryView.OnImageClickListener listener);
 
     GalleryBuilder onImageLongClickListener(ScrollGalleryView.OnImageLongClickListener listener);
+
+    GalleryBuilder onPageChangeListener(ViewPager.OnPageChangeListener onPageChangeListener);
 
     /**
      * Adds single MediaInfo to gallery
