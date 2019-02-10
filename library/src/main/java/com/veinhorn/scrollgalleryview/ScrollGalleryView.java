@@ -1,8 +1,10 @@
 package com.veinhorn.scrollgalleryview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.os.Build;
@@ -11,6 +13,8 @@ import android.support.transition.TransitionManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,11 +75,25 @@ public class ScrollGalleryView extends LinearLayout {
 
     private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override public void onClick(View v) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                horizontalScrollView.setOnScrollChangeListener(new OnScrollChangeListener() {
+                    @Override
+                    public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    }
+                });
+            }
+
+
             scroll(v);
 
             changeImageDescription(v.getId());
 
             viewPager.setCurrentItem(v.getId(), true);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                horizontalScrollView.setOnScrollChangeListener(new CustomOnScrollChangeListener());
+            }
         }
     };
 
@@ -148,6 +166,40 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
     }
 
+    // TODO: We should use more saying name for class
+    // TODO: Calculate plus\minus values based on thumbnail size
+    private class CustomOnScrollChangeListener implements OnScrollChangeListener {
+        @Override
+        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+            // Get view count from inner container
+            int childCount = thumbnailsContainer.getChildCount();
+
+            DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+            int halfOfWidth = displayMetrics.widthPixels / 2;
+
+            /* Here we should add all images to list and select the best */
+
+            for (int i = 0; i < thumbnailsContainer.getChildCount(); i++) {
+                Rect rect = new Rect();
+                thumbnailsContainer.getChildAt(i).getGlobalVisibleRect(rect);
+
+                if (viewPager.getCurrentItem() != i && (rect.left + 30 < halfOfWidth && halfOfWidth < rect.right - 30)) {
+                    // Here we should remove and than add again view pager listeners
+
+                    // TODO: Here we should think how to restore user defined OnPageChangeListener
+                    Log.i("tag", "h of width: " + halfOfWidth + ", selected: #" + i + ", left: " + (rect.left + 25) + ", right: " + (rect.right - 25));
+
+                    viewPager.clearOnPageChangeListeners();
+                    viewPager.setCurrentItem(i, false);
+                    changeImageDescription(i);
+                    viewPager.addOnPageChangeListener(viewPagerChangeListener);
+
+                    break;
+                }
+            }
+        }
+    }
+
     /**
      *
      * Also here we initialize ViewPager and add HorizontalView listeners
@@ -157,6 +209,39 @@ public class ScrollGalleryView extends LinearLayout {
     public ScrollGalleryView setFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
         initializeViewPager();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android 6.0 - API 23
+            horizontalScrollView.setOnScrollChangeListener(new CustomOnScrollChangeListener()/*new OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    // Get view count from inner container
+                    int childCount = thumbnailsContainer.getChildCount();
+
+                    DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
+                    int width = displayMetrics.widthPixels;
+
+                    for (int i = 0; i < thumbnailsContainer.getChildCount(); i++) {
+                        Rect rect = new Rect();
+                        thumbnailsContainer.getChildAt(i).getGlobalVisibleRect(rect);
+
+                        if (rect.left > width / 2 && width / 2 < rect.right && viewPager.getCurrentItem() != i) {
+
+                            // Here we should remove and than add again view pager listeners
+
+                            // TODO: Here we should think how to restore user defined OnPageChangeListener
+                            viewPager.clearOnPageChangeListeners();
+                            viewPager.setCurrentItem(i, false);
+                            viewPager.addOnPageChangeListener(viewPagerChangeListener);
+
+                            break;
+                        }
+                    }
+
+                    Log.i("some tag", "ttt");
+                }
+            }*/);
+        }
 
         if (hideThumbnailsAfterDelay != null) hideThumbnailsAfterDelay(hideThumbnailsAfterDelay);
 
@@ -229,6 +314,7 @@ public class ScrollGalleryView extends LinearLayout {
             mListOfMedia.add(info);
 
             final ImageView thumbnail = addThumbnail(getDefaultThumbnail());
+
             info.getLoader().loadThumbnail(getContext(), thumbnail, new MediaLoader.SuccessCallback() {
                 @Override
                 public void onSuccess() {
@@ -437,8 +523,10 @@ public class ScrollGalleryView extends LinearLayout {
         thumbnailView.setLayoutParams(lp);
         thumbnailView.setImageBitmap(thumbnail);
         thumbnailView.setId(mListOfMedia.size() - 1);
-        thumbnailView.setOnClickListener(thumbnailOnClickListener);
         thumbnailView.setScaleType(ImageView.ScaleType.CENTER);
+
+        thumbnailView.setOnClickListener(thumbnailOnClickListener);
+
         return thumbnailView;
     }
 
