@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.veinhorn.scrollgalleryview.builder.GalleryBuilder;
 import com.veinhorn.scrollgalleryview.builder.GalleryBuilderImpl;
@@ -48,24 +49,44 @@ public class ScrollGalleryView extends LinearLayout {
     private LinearLayout thumbnailsContainer;
     private HorizontalScrollView horizontalScrollView;
     private ViewPager viewPager;
+    private TextView imageDescription;
 
     // Transitions
     private Transition thumbnailsTransition;
     private boolean useDefaultThumbnailsTransition;
 
+    private boolean initOnce;
+
     // Listeners
     private final ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override public void onPageSelected(int position) {
             scroll(thumbnailsContainer.getChildAt(position));
+
+            changeImageDescription(position);
         }
     };
 
     private final OnClickListener thumbnailOnClickListener = new OnClickListener() {
         @Override public void onClick(View v) {
             scroll(v);
-            viewPager.setCurrentItem((int) v.getId(), true);
+
+            changeImageDescription(v.getId());
+
+            viewPager.setCurrentItem(v.getId(), true);
         }
     };
+
+    /**
+     * Change image description in ImageView
+     * @param position of current image
+     */
+    private void changeImageDescription(int position) {
+        if (mListOfMedia.get(position) != null) {
+            imageDescription.setText(mListOfMedia.get(position).getDescription());
+        } else {
+            imageDescription.setText("");
+        }
+    }
 
     private OnImageClickListener onImageClickListener;
     private OnImageLongClickListener onImageLongClickListener;
@@ -117,6 +138,8 @@ public class ScrollGalleryView extends LinearLayout {
         inflater.inflate(R.layout.scroll_gallery_view, this, true);
 
         horizontalScrollView = (HorizontalScrollView) findViewById(R.id.thumbnails_scroll_view);
+
+        imageDescription = (TextView) findViewById(R.id.imageDescription);
 
         thumbnailsContainer = (LinearLayout) findViewById(R.id.thumbnails_container);
         thumbnailsContainer.setPadding(displayProps.x / 2, 0, displayProps.x / 2, 0);
@@ -181,7 +204,6 @@ public class ScrollGalleryView extends LinearLayout {
         if (mediaInfo == null) {
             throw new NullPointerException("Infos may not be null!");
         }
-
         return addMedia(Collections.singletonList(mediaInfo));
     }
 
@@ -203,6 +225,13 @@ public class ScrollGalleryView extends LinearLayout {
 
             pagerAdapter.notifyDataSetChanged();
         }
+
+        // Set image description only once on first image, when user added first medias
+        if (!initOnce && !infos.isEmpty()) {
+            changeImageDescription(0);
+            initOnce = true;
+        }
+
         return this;
     }
 
