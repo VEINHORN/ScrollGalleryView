@@ -30,6 +30,7 @@ public class MainActivity extends FragmentActivity {
                                 .from(getSupportFragmentManager())
                                 .thumbnailSize(100)
                                 .enableZoom(true)
+                                .enableAutoSelection(true)
                                 .build()
                 )
                 .onImageClickListener(new ScrollGalleryView.OnImageClickListener() {
