@@ -127,6 +127,10 @@ You can specify a bunch of additional settings during gallery initialization.
 | Hide thumbnails | `.withHiddenThumbnails(false)` | Hide scroll view container with thumbnails on the bottom of screen |
 | Hide thumbnails on click | `.hideThumbnailsOnClick(true)` | Hide scroll view container with thumbnails when you click on main image area |
 
+### Adding listeners
+
+*ScrollGalleryView* supports adding listeners for events like: image click, long image click, changed page. More details you can find in [separate doc](docs/event-listeners.md).
+
 ## Sample application
 
 The sample application published on Google Play.
@@ -136,19 +140,19 @@ The sample application published on Google Play.
 ## License
 
     MIT License
-
+    
     Copyright (c) 2019 Boris Korogvich
-
+    
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-
+    
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-
+    
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
