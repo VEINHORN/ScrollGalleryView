@@ -55,7 +55,10 @@ public class ScrollGalleryView extends LinearLayout {
     private Transition thumbnailsTransition;
     private boolean useDefaultThumbnailsTransition;
 
-    private boolean initOnce;
+    /**
+     * Used to add image description on first media only once, when user first time add media
+     */
+    private boolean isFirstMediaDescriptionAdded;
 
     // Listeners
     private final ViewPager.SimpleOnPageChangeListener viewPagerChangeListener = new ViewPager.SimpleOnPageChangeListener() {
@@ -231,9 +234,9 @@ public class ScrollGalleryView extends LinearLayout {
         }
 
         // Set image description only once on first image, when user added first medias
-        if (!initOnce && !infos.isEmpty()) {
+        if (!isFirstMediaDescriptionAdded && !infos.isEmpty()) {
             changeImageDescription(0);
-            initOnce = true;
+            isFirstMediaDescriptionAdded = true;
         }
 
         return this;
