@@ -17,6 +17,14 @@ public interface MediaHelper {
     MediaInfo image(String url);
 
     /**
+     * Creates MediaInfo object w
+     * @param url is an image URL address
+     * @param description of an image
+     * @return MediaInfo object
+     */
+    MediaInfo image(String url, String description);
+
+    /**
      * Creates a list of MediaInfos from the list of image urls
      * @param urls is a list of image urls
      * @return a list of MediaInfo objects
