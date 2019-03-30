@@ -13,6 +13,10 @@ public class DSL {
         return mediaHelper.image(url);
     }
 
+    public static MediaInfo image(String url, String description) {
+        return mediaHelper.image(url, description);
+    }
+
     public static List<MediaInfo> images(List<String> urls) {
         return mediaHelper.images(urls);
     }
