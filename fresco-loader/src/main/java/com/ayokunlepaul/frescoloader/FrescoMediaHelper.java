@@ -14,6 +14,11 @@ public class FrescoMediaHelper extends BasicMediaHelper {
     }
 
     @Override
+    public MediaInfo image(String url, String description) {
+        return mediaInfo(url, description);
+    }
+
+    @Override
     public List<MediaInfo> images(List<String> urls) {
         List<MediaInfo> medias = new ArrayList<>();
 
@@ -30,6 +35,13 @@ public class FrescoMediaHelper extends BasicMediaHelper {
     }
 
     private MediaInfo mediaInfo(String url) {
+        return mediaInfo(url, null);
+    }
+
+    private MediaInfo mediaInfo(String url, String description) {
+        if (description != null) {
+            return MediaInfo.mediaLoader(new FrescoImageLoader(url), description);
+        }
         return MediaInfo.mediaLoader(new FrescoImageLoader(url));
     }
 }
