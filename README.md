@@ -47,13 +47,13 @@ implementation 'com.veinhorn.scrollgalleryview:picasso-loader:1.2.7'
 #### Glide
 
 ```gradle
-implementation 'com.veinhorn.scrollgalleryview:glide-loader:1.2.4'
+implementation 'com.veinhorn.scrollgalleryview:glide-loader:1.2.7'
 ```
 
 #### Fresco
 
 ```gradle
-implementation 'com.veinhorn.scrollgalleryview:fresco-loader:1.2.4'
+implementation 'com.veinhorn.scrollgalleryview:fresco-loader:1.2.7'
 ```
 
 ## Usage
