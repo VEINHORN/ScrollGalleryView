@@ -23,7 +23,7 @@ public class PicassoMediaHelper extends BasicMediaHelper {
         List<MediaInfo> medias = new ArrayList<>();
 
         for (String url : urls) {
-            medias.add(mediaInfo(url, null));
+            medias.add(mediaInfo(url));
         }
 
         return medias;
@@ -32,6 +32,10 @@ public class PicassoMediaHelper extends BasicMediaHelper {
     @Override
     public List<MediaInfo> images(String... urls) {
         return images(Arrays.asList(urls));
+    }
+
+    private MediaInfo mediaInfo(String url) {
+        return mediaInfo(url, null);
     }
 
     // TODO: Add null checking for image url
