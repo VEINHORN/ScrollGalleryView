@@ -1,3 +1,4 @@
 <resources>
     <string name="loading">Loading…</string>
+    <string name="first_image_transition_name">first_image_transition_name</string>
 </resources>
