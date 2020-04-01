@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 29
 
     defaultConfig {
@@ -8,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 8
-        versionName "1.0.8"
+        versionName "1.1.0"
     }
 
     compileOptions {
@@ -25,6 +26,7 @@ android {
 }
 
 dependencies {
+
     compile project(':library')
     compile project(':picasso-loader')
     compile fileTree(dir: 'libs', include: ['*.jar'])

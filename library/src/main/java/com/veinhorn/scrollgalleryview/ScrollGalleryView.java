@@ -16,12 +16,16 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+
 import androidx.fragment.app.FragmentManager;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+
+import com.veinhorn.scrollgalleryview.builder.GalleryBuilder;
+import com.veinhorn.scrollgalleryview.builder.GalleryBuilderImpl;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
 
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class ScrollGalleryView extends LinearLayout {
     private FragmentManager fragmentManager;
     private Context context;
     private Point displayProps;
-    private PagerAdapter pagerAdapter;
+    private ScreenSlidePagerAdapter pagerAdapter;
     private List<MediaInfo> mListOfMedia;
 
     // Options
@@ -69,10 +73,16 @@ public class ScrollGalleryView extends LinearLayout {
     };
 
     private OnImageClickListener onImageClickListener;
+    private OnImageLongClickListener onImageLongClickListener;
 
+    /**
+     * We should create OnImageClickListener to wrap our provided OnImageClickListener,
+     * otherwise it will be null when we pass it to PagerAdapter. Also it used to wrap
+     * code which is responsible for showing/hiding thumbnails when user click on image
+     */
     private OnImageClickListener innerOnImageClickListener = new OnImageClickListener() {
         @Override
-        public void onClick() {
+        public void onClick(int position) {
             if (hideThumbnailsOnClick) {
                 if (isThumbnailsHidden) {
                     showThumbnails();
@@ -82,12 +92,23 @@ public class ScrollGalleryView extends LinearLayout {
                     isThumbnailsHidden = true;
                 }
             }
-            if (onImageClickListener != null) onImageClickListener.onClick();
+            if (onImageClickListener != null) onImageClickListener.onClick(position);
+        }
+    };
+
+    private OnImageLongClickListener innerOnImageLongClickListener = new OnImageLongClickListener() {
+        @Override
+        public void onClick(int position) {
+            if (onImageLongClickListener != null) onImageLongClickListener.onClick(position);
         }
     };
 
     public interface OnImageClickListener {
-        void onClick();
+        void onClick(int position);
+    }
+
+    public interface OnImageLongClickListener {
+        void onClick(int position);
     }
 
     public ScrollGalleryView(Context context, AttributeSet attrs) {
@@ -131,6 +152,11 @@ public class ScrollGalleryView extends LinearLayout {
      */
     public ScrollGalleryView addOnImageClickListener(OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
+        return this;
+    }
+
+    public ScrollGalleryView addOnImageLongClickListener(OnImageLongClickListener onImageLongClickListener) {
+        this.onImageLongClickListener = onImageLongClickListener;
         return this;
     }
 
@@ -285,12 +311,32 @@ public class ScrollGalleryView extends LinearLayout {
     public void clearGallery() {
         // remove all media infos
         mListOfMedia.clear();
+
         // create new adapter
         pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener,
-                getResources().getString(R.string.first_image_transition_name));
+                                                   innerOnImageLongClickListener,
+                                                   getResources().getString(R.string.first_image_transition_name));
+
         viewPager.setAdapter(pagerAdapter);
         // remove thumbnails
         thumbnailsContainer.removeAllViews();
+    }
+
+    /**
+     * Remove a media from the gallery
+     *
+     * @param position media's position to remove
+     */
+    public void removeMedia(int position) {
+        if (position >= mListOfMedia.size() || position < 0) {
+            return;
+        }
+        pagerAdapter.removeItem(position);
+        removeThumbnail(position);
+    }
+
+    public static GalleryBuilder from(ScrollGalleryView galleryView) {
+        return new GalleryBuilderImpl(galleryView);
     }
 
     private void hideThumbnailsAfterDelay(int delay) {
@@ -328,6 +374,14 @@ public class ScrollGalleryView extends LinearLayout {
         return point;
     }
 
+    private void removeThumbnail(int position) {
+        View thumbnail = thumbnailsContainer.getChildAt(position);
+        if (thumbnail == null) {
+            return;
+        }
+        thumbnailsContainer.removeView(thumbnail);
+    }
+
     private ImageView addThumbnail(Bitmap image) {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(thumbnailSize, thumbnailSize);
         lp.setMargins(10, 10, 10, 10);
@@ -354,8 +408,15 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager) findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener,
+
+        pagerAdapter = new ScreenSlidePagerAdapter(
+                fragmentManager, 
+                mListOfMedia, 
+                zoomEnabled, 
+                innerOnImageClickListener,
+                innerOnImageLongClickListener,
                 getResources().getString(R.string.first_image_transition_name));
+      
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }

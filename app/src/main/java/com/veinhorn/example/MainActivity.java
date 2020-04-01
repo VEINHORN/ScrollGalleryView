@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 .withHiddenThumbnails(false)
                 .hideThumbnailsOnClick(true)
                 .hideThumbnailsAfter(5000)
-                .addOnImageClickListener(() -> {
-                    Log.i(getClass().getName(), "You have clicked on image");
+                .addOnImageClickListener((position) -> {
+                    Log.i(getClass().getName(), "You have clicked on image #" + position);
                 })
                 .setFragmentManager(getSupportFragmentManager());
 

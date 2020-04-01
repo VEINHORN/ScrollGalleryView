@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
+
     compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 14
+        versionName "1.2.7"
     }
 
     buildTypes {
@@ -23,6 +24,7 @@ android {
 }
 
 dependencies {
+
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
@@ -42,15 +44,15 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.0.8'
+    libraryVersion = '1.2.6'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
     developerEmail = 'b.korogvich@gmail.com'
 
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+    licenseName = 'The MIT License'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["The MIT License"]
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

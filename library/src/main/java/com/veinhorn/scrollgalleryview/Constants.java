@@ -10,6 +10,7 @@ public final class Constants {
     public static final String URL = "url";
     public static final String IS_LOCKED = "isLocked";
     public static final String IMAGE = "image";
+    public static final String POSITION = "position";
 
     private Constants() {
     }
