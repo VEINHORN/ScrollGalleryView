@@ -18,6 +18,8 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     private ScrollGalleryView.OnImageClickListener onImageClickListener;
     private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
+    
+    private String transitionName;
 
     public ScreenSlidePagerAdapter(FragmentManager fm, List<MediaInfo> listOfMedia,
                                    boolean isZoom, ScrollGalleryView.OnImageClickListener onImageClickListener,
@@ -27,8 +29,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         this.mListOfMedia = listOfMedia;
         this.isZoom = isZoom;
         this.onImageClickListener = onImageClickListener;
-
-        ((ImageFragment)this.getItem(0)).setTransitionName(transitionName);
+        this.transitionName = transitionName;
 
         this.onImageLongClickListener = onImageLongClickListener;
     }
@@ -39,6 +40,8 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         if (position < mListOfMedia.size()) {
             MediaInfo mediaInfo = mListOfMedia.get(position);
             fragment = loadImageFragment(mediaInfo, position);
+            if (position == 0)
+                ((ImageFragment)fragment).setTransitionName(transitionName);
         }
         return fragment;
     }
