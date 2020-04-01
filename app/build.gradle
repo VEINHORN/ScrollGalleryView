@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.veinhorn.scrollgalleryview"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 8
         versionName "1.0.8"
     }
@@ -28,9 +28,10 @@ dependencies {
     compile project(':library')
     compile project(':picasso-loader')
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'org.jsoup:jsoup:1.11.2'
-    compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
 }
