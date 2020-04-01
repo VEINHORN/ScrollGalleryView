@@ -286,7 +286,8 @@ public class ScrollGalleryView extends LinearLayout {
         // remove all media infos
         mListOfMedia.clear();
         // create new adapter
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener,
+                getResources().getString(R.string.first_image_transition_name));
         viewPager.setAdapter(pagerAdapter);
         // remove thumbnails
         thumbnailsContainer.removeAllViews();
@@ -353,7 +354,8 @@ public class ScrollGalleryView extends LinearLayout {
 
     private void initializeViewPager() {
         viewPager = (HackyViewPager) findViewById(R.id.viewPager);
-        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener);
+        pagerAdapter = new ScreenSlidePagerAdapter(fragmentManager, mListOfMedia, zoomEnabled, innerOnImageClickListener,
+                getResources().getString(R.string.first_image_transition_name));
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerChangeListener);
     }
