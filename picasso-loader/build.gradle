@@ -1,13 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
+
+
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 10
-        versionName "1.2.4"
+        targetSdkVersion 29
+        versionCode 11
+        versionName "1.2.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -24,9 +26,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':library')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    compile project(':library')
+    compile 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

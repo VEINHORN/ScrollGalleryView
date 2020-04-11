@@ -1,12 +1,16 @@
 package com.veinhorn.scrollgalleryview;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.veinhorn.scrollgalleryview.loader.MediaLoader;
@@ -23,6 +27,12 @@ public class ImageFragment extends Fragment {
 
     private ScrollGalleryView.OnImageClickListener onImageClickListener;
     private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
+
+    private String transitionName;
+
+    public void setTransitionName(String transitionName) {
+        this.transitionName = transitionName;
+    }
 
     public void setOnImageClickListener(ScrollGalleryView.OnImageClickListener onImageClickListener) {
         this.onImageClickListener = onImageClickListener;
@@ -42,6 +52,8 @@ public class ImageFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.image_fragment, container, false);
         photoView = rootView.findViewById(R.id.photoView);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            photoView.setTransitionName(transitionName);
         if (onImageClickListener != null) {
             photoView.setOnClickListener(new View.OnClickListener() {
                 @Override

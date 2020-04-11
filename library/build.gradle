@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
+
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 13
-        versionName "1.2.6"
+        targetSdkVersion 29
+        versionCode 14
+        versionName "1.2.7"
     }
 
     buildTypes {
@@ -23,10 +24,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:transition:27.1.1'
-    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
 }
 
 ext {

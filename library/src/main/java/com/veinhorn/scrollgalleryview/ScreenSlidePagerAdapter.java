@@ -1,10 +1,9 @@
 package com.veinhorn.scrollgalleryview;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
@@ -19,16 +18,19 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     private ScrollGalleryView.OnImageClickListener onImageClickListener;
     private ScrollGalleryView.OnImageLongClickListener onImageLongClickListener;
+    
+    private String transitionName;
 
-    public ScreenSlidePagerAdapter(FragmentManager fm,
-                                   List<MediaInfo> listOfMedia,
-                                   boolean isZoom,
-                                   ScrollGalleryView.OnImageClickListener onImageClickListener,
-                                   ScrollGalleryView.OnImageLongClickListener onImageLongClickListener) {
+    public ScreenSlidePagerAdapter(FragmentManager fm, List<MediaInfo> listOfMedia,
+                                   boolean isZoom, ScrollGalleryView.OnImageClickListener onImageClickListener,
+                                   ScrollGalleryView.OnImageLongClickListener onImageLongClickListener,
+                                   String transitionName) {
         super(fm);
         this.mListOfMedia = listOfMedia;
         this.isZoom = isZoom;
         this.onImageClickListener = onImageClickListener;
+        this.transitionName = transitionName;
+
         this.onImageLongClickListener = onImageLongClickListener;
     }
 
@@ -38,6 +40,8 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         if (position < mListOfMedia.size()) {
             MediaInfo mediaInfo = mListOfMedia.get(position);
             fragment = loadImageFragment(mediaInfo, position);
+            if (position == 0)
+                ((ImageFragment)fragment).setTransitionName(transitionName);
         }
         return fragment;
     }

@@ -33,7 +33,7 @@ public class PicassoImageLoader implements MediaLoader {
 
     @Override
     public void loadMedia(Context context, final ImageView imageView, final MediaLoader.SuccessCallback callback) {
-        Picasso.with(context)
+        Picasso.get()
                 .load(url)
                 .placeholder(R.drawable.placeholder_image)
                 .into(imageView, new ImageCallback(callback));
@@ -41,7 +41,7 @@ public class PicassoImageLoader implements MediaLoader {
 
     @Override
     public void loadThumbnail(Context context, final ImageView thumbnailView, final MediaLoader.SuccessCallback callback) {
-        Picasso.with(context)
+        Picasso.get()
                 .load(url)
                 .resize(thumbnailWidth == null ? 100 : thumbnailWidth,
                         thumbnailHeight == null ? 100 : thumbnailHeight)
@@ -57,14 +57,11 @@ public class PicassoImageLoader implements MediaLoader {
             this.callback = callback;
         }
 
-        @Override
-        public void onSuccess() {
+        @Override public void onSuccess() {
             callback.onSuccess();
         }
 
-        @Override
-        public void onError() {
-
+        @Override public void onError(Exception e) {
         }
     }
 }
