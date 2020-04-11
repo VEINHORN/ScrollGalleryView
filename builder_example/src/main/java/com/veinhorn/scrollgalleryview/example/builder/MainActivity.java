@@ -1,8 +1,9 @@
 package com.veinhorn.scrollgalleryview.example.builder;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.veinhorn.scrollgalleryview.ScrollGalleryView;
 import com.veinhorn.scrollgalleryview.builder.GallerySettings;

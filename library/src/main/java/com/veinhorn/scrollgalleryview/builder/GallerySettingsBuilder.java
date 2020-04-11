@@ -1,6 +1,6 @@
 package com.veinhorn.scrollgalleryview.builder;
 
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 
 public interface GallerySettingsBuilder {
     GallerySettingsBuilder thumbnailSize(int thumbnailSize);

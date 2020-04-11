@@ -1,6 +1,6 @@
 package com.veinhorn.scrollgalleryview.builder;
 
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 
 public class GallerySettingsBuilderImpl implements GallerySettingsBuilder {
     private GallerySettings gallerySettings;
