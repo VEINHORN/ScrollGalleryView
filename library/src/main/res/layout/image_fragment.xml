@@ -2,14 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/design_default_color_error">
+    android:orientation="vertical">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"
-        android:src="@drawable/placeholder_image"
-        android:background="@color/design_default_color_error"/>
+        android:src="@drawable/placeholder_image"/>
 </LinearLayout>
