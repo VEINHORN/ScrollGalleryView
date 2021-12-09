@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
@@ -217,7 +218,24 @@ public class ScrollGalleryView extends LinearLayout {
      * @param i a zero-based index
      * @return
      */
-    public ScrollGalleryView setCurrentItem(int i) {
+    public ScrollGalleryView setCurrentItem(final int i) {
+        viewPager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            private boolean executed = false;
+
+            @Override
+            public void onGlobalLayout() {
+                if (!executed){
+                    final View view = thumbnailsContainer.getChildAt(i);
+                    scroll(view);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        viewPager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+
+                    executed = true;
+                }
+            }});
+
         viewPager.setCurrentItem(i, false);
         return this;
     }
