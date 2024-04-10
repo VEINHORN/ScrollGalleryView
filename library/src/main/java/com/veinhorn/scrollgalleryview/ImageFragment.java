@@ -74,7 +74,7 @@ public class ImageFragment extends Fragment {
 
         viewPager = (HackyViewPager) getActivity().findViewById(R.id.viewPager);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null && viewPager != null) {
             boolean isLocked = savedInstanceState.getBoolean(Constants.IS_LOCKED, false);
             viewPager.setLocked(isLocked);
         }
