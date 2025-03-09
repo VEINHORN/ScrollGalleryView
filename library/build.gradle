@@ -1,14 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.veinhorn.scrollgalleryview"
 
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 29
-        versionCode 15
-        versionName "1.2.8"
+        targetSdkVersion 33
     }
 
     buildTypes {
@@ -44,7 +43,7 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.2.8'
+    libraryVersion = '1.2.9'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
@@ -54,6 +53,3 @@ ext {
     licenseUrl = 'https://opensource.org/licenses/MIT'
     allLicenses = ["The MIT License"]
 }
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

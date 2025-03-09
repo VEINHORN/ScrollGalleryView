@@ -35,7 +35,7 @@ public class PicassoImageLoader implements MediaLoader {
     public void loadMedia(Context context, final ImageView imageView, final MediaLoader.SuccessCallback callback) {
         Picasso.get()
                 .load(url)
-                .placeholder(R.drawable.placeholder_image)
+                .placeholder(com.veinhorn.scrollgalleryview.R.drawable.placeholder_image)
                 .into(imageView, new ImageCallback(callback));
     }
 
@@ -45,7 +45,7 @@ public class PicassoImageLoader implements MediaLoader {
                 .load(url)
                 .resize(thumbnailWidth == null ? 100 : thumbnailWidth,
                         thumbnailHeight == null ? 100 : thumbnailHeight)
-                .placeholder(R.drawable.placeholder_image)
+                .placeholder(com.veinhorn.scrollgalleryview.R.drawable.placeholder_image)
                 .centerInside()
                 .into(thumbnailView, new ImageCallback(callback));
     }

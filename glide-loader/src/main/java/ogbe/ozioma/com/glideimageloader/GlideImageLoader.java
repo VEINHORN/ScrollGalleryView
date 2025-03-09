@@ -24,7 +24,7 @@ public class GlideImageLoader implements MediaLoader {
     public GlideImageLoader(String url) {
         this.url = url;
         requestOptions = new RequestOptions()
-                .placeholder(R.drawable.placeholder_image);
+                .placeholder(com.veinhorn.scrollgalleryview.R.drawable.placeholder_image);
     }
 
     public GlideImageLoader(String url, int width, int height) {
@@ -32,7 +32,7 @@ public class GlideImageLoader implements MediaLoader {
         this.width = width;
         this.height = height;
         requestOptions = new RequestOptions()
-                .placeholder(R.drawable.placeholder_image)
+                .placeholder(com.veinhorn.scrollgalleryview.R.drawable.placeholder_image)
                 .override(width, height);
 
     }

@@ -22,21 +22,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.scroll_gallery_view)
     protected ScrollGalleryView scrollGalleryView;
-
-    @BindView(R.id.spin_kit)
     protected SpinKitView progressBar;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        scrollGalleryView = findViewById(R.id.scroll_gallery_view);
+        progressBar = findViewById(R.id.spin_kit);
 
         scrollGalleryView
                 .setThumbnailSize(200)
