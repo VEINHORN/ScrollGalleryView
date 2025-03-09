@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity {
                 })
                 .add(images(
                         "https://media.istockphoto.com/id/104241367/photo/cruise-ship.jpg?s=612x612&w=0&k=20&c=so7ce3cN0vhkKqIL38muc7rPqkp6WyNXWiWzuXH-mD4=",
-                        "http://povodu.ru/wp-content/uploads/2016/04/pochemu-korabl-derzitsa-na-vode.jpg"
+                        "https://www.shutterstock.com/image-illustration/sailboat-against-beautiful-landscape-600nw-157658990.jpg"
                 ))
                 .add(video("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", R.mipmap.default_video))
                 .build();

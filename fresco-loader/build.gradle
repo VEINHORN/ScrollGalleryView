@@ -27,9 +27,6 @@ dependencies {
     implementation project(':library')
     implementation 'com.facebook.fresco:fresco:2.3.0'
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
 ext {
@@ -45,7 +42,7 @@ ext {
     siteUrl = 'https://github.com/VEINHORN/ScrollGalleryView'
     gitUrl = 'https://github.com/VEINHORN/ScrollGalleryView.git'
 
-    libraryVersion = '1.2.4'
+    libraryVersion = '1.2.5'
 
     developerId = 'veinhorn'
     developerName = 'Boris Korogvich'
