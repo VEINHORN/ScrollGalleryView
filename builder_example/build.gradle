@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.veinhorn.scrollgalleryview.example.builder"
+
     compileSdkVersion 29
 
     defaultConfig {

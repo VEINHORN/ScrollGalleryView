@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "ogbe.ozioma.com.glideimageloader"
     compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.2.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,6 +57,3 @@ ext {
     licenseUrl = 'https://opensource.org/licenses/MIT'
     allLicenses = ["MIT"]
 }
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

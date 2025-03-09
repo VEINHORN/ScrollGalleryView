@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.veinhorn.scrollgalleryview.loader.picasso"
+
     compileSdkVersion 29
-
-
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 11
-        versionName "1.2.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,6 +54,3 @@ ext {
     licenseUrl = 'https://opensource.org/licenses/MIT'
     allLicenses = ["MIT"]
 }
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
