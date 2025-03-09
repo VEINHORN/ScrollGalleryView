@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 
 android {
     namespace "ogbe.ozioma.com.glideimageloader"
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 29
+        targetSdkVersion 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
