@@ -40,10 +40,10 @@ public class MainActivity extends FragmentActivity {
                     }
                 })
                 .add(images(
-                        "http://pirate-islands.com/wp-content/uploads/2018/07/07_Dom-Fernando-II_01-636x310.jpg",
+                        "https://media.istockphoto.com/id/104241367/photo/cruise-ship.jpg?s=612x612&w=0&k=20&c=so7ce3cN0vhkKqIL38muc7rPqkp6WyNXWiWzuXH-mD4=",
                         "http://povodu.ru/wp-content/uploads/2016/04/pochemu-korabl-derzitsa-na-vode.jpg"
                 ))
-                .add(video("http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4", R.mipmap.default_video))
+                .add(video("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", R.mipmap.default_video))
                 .build();
     }
 }
